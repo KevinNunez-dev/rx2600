@@ -1,0 +1,60 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'RX2600 — Robotic Therapy System',
+  description = 'The RX2600 Therapeutic Robot non-surgically lengthens muscle tissue to promote pain relief and increase mobility. The future of clinical therapy.'
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+  <link rel="icon" type="image/svg+xml" href="/rx2600/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300..700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/rx2600/styles/global.css" />
+</head>
+<body>
+  <slot />
+  <script>
+    // Intersection Observer fallback for browsers without scroll-driven animations
+    const supported = CSS.supports('animation-timeline', 'scroll()');
+    if (!supported) {
+      document.querySelectorAll('[data-reveal]').forEach(el => {
+        el.classList.add('reveal-js');
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+          });
+        }, { threshold: 0.1 });
+        obs.observe(el);
+      });
+      document.querySelectorAll('[data-reveal-clip]').forEach(el => {
+        el.classList.add('reveal-clip-js');
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+          });
+        }, { threshold: 0.05 });
+        obs.observe(el);
+      });
+    }
+    // Mobile nav toggle
+    const ham = document.querySelector('.nav-hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    if (ham && navLinks) {
+      ham.addEventListener('click', () => {
+        const open = navLinks.classList.toggle('nav-open');
+        ham.setAttribute('aria-expanded', String(open));
+      });
+    }
+  </script>
+</body>
+</html>
