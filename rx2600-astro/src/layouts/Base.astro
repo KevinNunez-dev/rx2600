@@ -144,32 +144,31 @@ const {
     }
 
     /* ═══════════════════════════════════════════════════
-       FULLSCREEN SCROLL ENGINE
-       - Each [data-panel] = 100vh, stacked absolutely
-       - Mouse wheel / touch drives a custom scroll value
-       - rAF lerps toward target, updates transforms
-       - Exit: darkens + slides left or right
-       - Enter: rises from slight translateY below
+       FULLSCREEN SCROLL ENGINE — CINEMATIC SLOW MODE
+       - LERP = 0.038  →  slow, silky panel transitions
+       - COOLDOWN = 1200ms → must fully experience each
+         section before the next one can trigger
+       - Touch threshold = 60px (intentional swipe only)
     ═══════════════════════════════════════════════════ */
     const panels = Array.from(document.querySelectorAll('[data-panel]'));
     if (!panels.length) return;
 
-    const LERP = 0.072;          // smoothing factor (lower = silkier)
-    const SLIDE_PX = 120;        // how far panels slide on exit (px)
-    let current = 0;
-    let target = 0;
-    let scrollY = 0;
-    let rafId = null;
-    let isAnimating = false;
-    let lastWheelTime = 0;
-    const VH = window.innerHeight;
-    const total = panels.length;
+    const LERP     = 0.038;   // ← was 0.072; lower = slower, silkier
+    const COOLDOWN = 1200;    // ← ms to lock input after each section change
+    const SLIDE_PX = 120;
+
+    let current     = 0;
+    let target      = 0;
+    let smoothScroll = 0;
+    let locked      = false;  // cooldown gate
+    let rafId       = null;
+    const total     = panels.length;
 
     // Make main a scroll container (height = panels * vh)
     const main = document.getElementById('main-content');
     if (main) main.style.height = (total * 100) + 'vh';
 
-    // Position panels
+    // Position panels as fixed fullscreen layers
     panels.forEach((p, i) => {
       p.style.cssText = `
         position: fixed;
@@ -201,7 +200,6 @@ const {
       });
     }
 
-    // NAV collapse on non-zero panel
     const navOuter = document.getElementById('nav-outer');
     function updateNav(idx) {
       if (!navOuter) return;
@@ -219,122 +217,100 @@ const {
       });
     });
 
+    /* ─── Core: advance to a new section ─── */
+    function advance(dir) {
+      if (locked) return;
+      const next = Math.max(0, Math.min(total - 1, target + dir));
+      if (next === target) return;
+      target  = next;
+      current = next;
+      locked  = true;
+      setTimeout(() => { locked = false; }, COOLDOWN);
+      setDots(next);
+      updateNav(next);
+      triggerReveals(panels[next]);
+    }
+
     function goTo(idx) {
       idx = Math.max(0, Math.min(total - 1, idx));
+      target  = idx;
       current = idx;
-      target = idx;
-      scrollY = idx;
+      locked  = true;
+      setTimeout(() => { locked = false; }, COOLDOWN);
       applyPanels(idx);
       setDots(idx);
       updateNav(idx);
-      // re-trigger reveals on target panel
       triggerReveals(panels[idx]);
     }
 
     function applyPanels(progress) {
-      // progress is float: e.g. 1.4 means 40% through transition from 1→2
       panels.forEach((p, i) => {
         const diff = progress - i;
         let tx = 0, ty = 0, opacity = 1, scale = 1;
 
         if (diff < -0.001) {
-          // Panel is BELOW current (upcoming): rise from below slightly
+          // Upcoming panel: rises from below
           ty = Math.min(60, -diff * 60);
           opacity = Math.max(0, 1 + diff * 2);
           if (diff < -0.5) { opacity = 0; ty = 60; }
         } else if (diff > 0.001) {
-          // Panel is ABOVE current (exiting): slide left + darken
+          // Exiting panel: slides left/right + darkens
           const exit = Math.min(1, diff);
-          // Alternate: odd panels slide left, even panels slide right
-          const dir = i % 2 === 0 ? -1 : 1;
-          tx = exit * SLIDE_PX * dir;
+          const dir  = i % 2 === 0 ? -1 : 1;
+          tx      = exit * SLIDE_PX * dir;
           opacity = Math.max(0, 1 - exit * 1.8);
-          scale = 1 - exit * 0.04;
-          if (exit >= 1) { opacity = 0; }
+          scale   = 1 - exit * 0.04;
+          if (exit >= 1) opacity = 0;
         }
 
-        p.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${scale})`;
-        p.style.opacity = opacity;
-        // Only the current+adjacent panels need to be visible in z-stack
+        p.style.transform    = `translate3d(${tx}px, ${ty}px, 0) scale(${scale})`;
+        p.style.opacity      = opacity;
         p.style.pointerEvents = (Math.abs(diff) < 0.5) ? 'auto' : 'none';
       });
     }
 
-    // Smooth scroll value
-    let smoothScroll = 0;
-
+    /* ─── rAF loop ─── */
     function tick() {
       smoothScroll += (target - smoothScroll) * LERP;
-      // Snap when close enough
-      if (Math.abs(smoothScroll - target) < 0.001) smoothScroll = target;
+      if (Math.abs(smoothScroll - target) < 0.0008) smoothScroll = target;
       applyPanels(smoothScroll);
       rafId = requestAnimationFrame(tick);
     }
     rafId = requestAnimationFrame(tick);
 
-    // Wheel handler
-    function onWheel(e) {
+    /* ─── Wheel ─── */
+    window.addEventListener('wheel', e => {
       e.preventDefault();
-      const now = Date.now();
-      if (now - lastWheelTime < 80) return; // throttle
-      lastWheelTime = now;
-      const dir = e.deltaY > 0 ? 1 : -1;
-      const next = Math.max(0, Math.min(total - 1, target + dir));
-      if (next !== target) {
-        target = next;
-        current = next;
-        setDots(next);
-        updateNav(next);
-        triggerReveals(panels[next]);
-      }
-    }
-    window.addEventListener('wheel', onWheel, { passive: false });
+      advance(e.deltaY > 0 ? 1 : -1);
+    }, { passive: false });
 
-    // Touch handler
+    /* ─── Touch ─── */
     let touchStartY = 0;
     window.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
     window.addEventListener('touchend', e => {
       const dy = touchStartY - e.changedTouches[0].clientY;
-      if (Math.abs(dy) < 40) return;
-      const dir = dy > 0 ? 1 : -1;
-      const next = Math.max(0, Math.min(total - 1, target + dir));
-      if (next !== target) {
-        target = next;
-        current = next;
-        setDots(next);
-        updateNav(next);
-        triggerReveals(panels[next]);
-      }
+      if (Math.abs(dy) < 60) return; // 60px = intentional swipe
+      advance(dy > 0 ? 1 : -1);
     }, { passive: true });
 
-    // Keyboard arrows
+    /* ─── Keyboard ─── */
     window.addEventListener('keydown', e => {
-      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-        e.preventDefault();
-        const next = Math.min(total - 1, target + 1);
-        if (next !== target) { target = next; current = next; setDots(next); updateNav(next); triggerReveals(panels[next]); }
-      }
-      if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        e.preventDefault();
-        const next = Math.max(0, target - 1);
-        if (next !== target) { target = next; current = next; setDots(next); updateNav(next); triggerReveals(panels[next]); }
-      }
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); advance(1); }
+      if (e.key === 'ArrowUp'   || e.key === 'PageUp')   { e.preventDefault(); advance(-1); }
     });
 
-    // Scroll reveal — trigger per panel when it becomes active
+    /* ─── Scroll reveal ─── */
     function triggerReveals(panel) {
       if (!panel) return;
       panel.querySelectorAll('[data-reveal]').forEach(el => {
         el.classList.remove('revealed');
-        // Small stagger so they fire in sequence
         const delay = parseInt(el.dataset.delay || 0);
         setTimeout(() => el.classList.add('revealed'), delay + 80);
       });
     }
-    // Trigger first panel on load
-    setTimeout(() => triggerReveals(panels[0]), 200);
 
-    // Initial paint
+    // Boot
+    setTimeout(() => triggerReveals(panels[0]), 200);
     applyPanels(0);
     setDots(0);
     updateNav(0);
