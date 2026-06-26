@@ -1,3 +1,4 @@
+---
 export interface Props {
   title?: string;
   description?: string;
@@ -165,18 +166,13 @@ const {
     })();
 
     // ─── HEADLINE SCROLL-CLIP ───
-    // As the section scrolls out, the headline clips upward (like text going behind a wall)
     (function() {
       const headlines = document.querySelectorAll('.scroll-headline');
       function update() {
-        const sy = window.scrollY;
         headlines.forEach(el => {
           const section = el.closest('section, .split-section');
           if (!section) return;
           const rect = section.getBoundingClientRect();
-          const vh = window.innerHeight;
-          // How far through the section's exit are we? 0 = just entering exit, 1 = fully gone
-          const exitStart = vh * 0.3; // start clipping when 30% above viewport center
           const progress = Math.max(0, Math.min(1, -rect.top / (section.offsetHeight * 0.5)));
           const translateY = progress * -60;
           const opacity = 1 - progress * 1.4;
@@ -283,14 +279,12 @@ const {
   #cursor-dot.dot-hover { background: #fff; }
 
   /* ─── NOTCH NAV ─── */
-  /* Outer wrap: positions the notch pill in the top-center */
   .notch-wrap {
     position: fixed;
     top: 12px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 900;
-    /* Start wide, shrink on scroll */
     width: min(860px, 92vw);
     transition: width 0.5s cubic-bezier(0.16,1,0.3,1), top 0.5s cubic-bezier(0.16,1,0.3,1);
   }
@@ -298,13 +292,12 @@ const {
     width: min(720px, 88vw);
     top: 10px;
   }
-
   .header {
     background: rgba(12,12,16,0.82);
     backdrop-filter: blur(24px) saturate(160%);
     -webkit-backdrop-filter: blur(24px) saturate(160%);
     border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 50px; /* pill notch shape */
+    border-radius: 50px;
     overflow: hidden;
     box-shadow: 0 4px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
     transition: box-shadow 0.4s;
@@ -312,7 +305,6 @@ const {
   .notch-wrap.notch-scrolled .header {
     box-shadow: 0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
   }
-
   .navbar { padding: 0; }
   .nav-container {
     max-width: 100%; margin: 0; padding: 0.7rem 1.5rem;
@@ -325,16 +317,9 @@ const {
     color: #e8e8f0;
     transition: opacity 0.2s;
   }
-  /* Only the SVG carries the gradient, text stays white — less color */
-  .logo span {
-    background: none;
-    -webkit-text-fill-color: #e8e8f0;
-    color: #e8e8f0;
-  }
+  .logo span { background: none; -webkit-text-fill-color: #e8e8f0; color: #e8e8f0; }
   .logo:hover { opacity: 0.75; }
-  .nav-links {
-    display: flex; list-style: none; align-items: center; gap: 2rem;
-  }
+  .nav-links { display: flex; list-style: none; align-items: center; gap: 2rem; }
   .nav-link {
     font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase;
     color: rgba(232,232,240,0.55);
@@ -357,14 +342,8 @@ const {
     border-radius: 50px;
     transition: background 0.3s, border-color 0.3s;
   }
-  .nav-cta:hover {
-    background: rgba(196,56,127,0.15);
-    border-color: #c4387f;
-  }
-  .hamburger {
-    display: none; flex-direction: column; gap: 5px;
-    padding: 8px; cursor: none;
-  }
+  .nav-cta:hover { background: rgba(196,56,127,0.15); border-color: #c4387f; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: none; }
   .hamburger span {
     display: block; width: 22px; height: 1px; background: rgba(232,232,240,0.7);
     transition: transform 0.3s, opacity 0.3s;
@@ -372,7 +351,6 @@ const {
   }
   .hamburger.open span:first-child { transform: translateY(6px) rotate(45deg); }
   .hamburger.open span:last-child { transform: translateY(-6px) rotate(-45deg); }
-  /* Mobile menu drops below the notch pill */
   .mobile-menu {
     display: none; margin-top: 8px;
     background: rgba(12,12,16,0.95);
@@ -416,12 +394,8 @@ const {
     [data-reveal] { opacity: 1; transform: none; transition: none; }
   }
 
-  /* ─── SCROLL HEADLINE — exit clip ─── */
-  /* Wraps h1/h2 — the JS drives translateY + opacity out as section exits */
-  .scroll-headline {
-    will-change: transform, opacity;
-    transition: none; /* JS handles this directly for smoothness */
-  }
+  /* ─── SCROLL HEADLINE ─── */
+  .scroll-headline { will-change: transform, opacity; transition: none; }
 
   /* ─── BUTTONS ─── */
   .btn-primary {
