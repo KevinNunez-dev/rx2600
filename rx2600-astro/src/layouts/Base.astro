@@ -1,4 +1,3 @@
----
 export interface Props {
   title?: string;
   description?: string;
@@ -33,37 +32,39 @@ const {
   <!-- Noise Overlay -->
   <div id="noise" aria-hidden="true"></div>
 
-  <!-- Navigation -->
-  <header class="header" id="header">
-    <nav class="navbar">
-      <div class="nav-container">
-        <a href="#hero" class="logo" aria-label="RX2600 Home">
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-            <rect x="1" y="1" width="34" height="34" rx="4" stroke="url(#logo-grad)" stroke-width="1.5"/>
-            <path d="M8 10h8c3.3 0 6 2.7 6 6s-2.7 6-6 6H8V10z" stroke="url(#logo-grad)" stroke-width="1.5" fill="none"/>
-            <path d="M16 22l6 6" stroke="url(#logo-grad)" stroke-width="1.5" stroke-linecap="round"/>
-            <rect x="20" y="13" width="8" height="10" rx="1" stroke="url(#logo-grad)" stroke-width="1.5" fill="none"/>
-            <defs>
-              <linearGradient id="logo-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#c4387f"/>
-                <stop offset="100%" stop-color="#8b22d9"/>
-              </linearGradient>
-            </defs>
-          </svg>
-          <span>RX2600</span>
-        </a>
-        <ul class="nav-links" role="list">
-          <li><a href="#product" class="nav-link">System</a></li>
-          <li><a href="#technology" class="nav-link">Technology</a></li>
-          <li><a href="#clinical" class="nav-link">Clinical</a></li>
-          <li><a href="#contact" class="nav-cta">Request Demo</a></li>
-        </ul>
-        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
-          <span></span>
-          <span></span>
-        </button>
-      </div>
-    </nav>
+  <!-- Navigation — iPhone-notch style -->
+  <div class="notch-wrap" id="notch-wrap">
+    <header class="header" id="header">
+      <nav class="navbar">
+        <div class="nav-container">
+          <a href="#hero" class="logo" aria-label="RX2600 Home">
+            <svg width="32" height="32" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <rect x="1" y="1" width="34" height="34" rx="4" stroke="url(#logo-grad)" stroke-width="1.5"/>
+              <path d="M8 10h8c3.3 0 6 2.7 6 6s-2.7 6-6 6H8V10z" stroke="url(#logo-grad)" stroke-width="1.5" fill="none"/>
+              <path d="M16 22l6 6" stroke="url(#logo-grad)" stroke-width="1.5" stroke-linecap="round"/>
+              <rect x="20" y="13" width="8" height="10" rx="1" stroke="url(#logo-grad)" stroke-width="1.5" fill="none"/>
+              <defs>
+                <linearGradient id="logo-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#c4387f"/>
+                  <stop offset="100%" stop-color="#8b22d9"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <span>RX2600</span>
+          </a>
+          <ul class="nav-links" role="list">
+            <li><a href="#product" class="nav-link">System</a></li>
+            <li><a href="#technology" class="nav-link">Technology</a></li>
+            <li><a href="#clinical" class="nav-link">Clinical</a></li>
+            <li><a href="#contact" class="nav-cta">Request Demo</a></li>
+          </ul>
+          <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </nav>
+    </header>
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <ul role="list">
@@ -73,7 +74,7 @@ const {
         <li><a href="#contact" class="mobile-link">Request Demo</a></li>
       </ul>
     </div>
-  </header>
+  </div>
 
   <main id="main-content">
     <slot />
@@ -105,15 +106,12 @@ const {
       document.addEventListener('mouseenter', () => { dot.style.opacity='1'; ring.style.opacity='1'; });
     })();
 
-    // ─── HEADER SCROLL ───
+    // ─── NOTCH SCROLL SHRINK ───
     (function() {
-      const header = document.getElementById('header');
-      let lastY = 0;
+      const wrap = document.getElementById('notch-wrap');
       window.addEventListener('scroll', () => {
-        const y = window.scrollY;
-        if (y > 60) header.classList.add('scrolled');
-        else header.classList.remove('scrolled');
-        lastY = y;
+        if (window.scrollY > 40) wrap.classList.add('notch-scrolled');
+        else wrap.classList.remove('notch-scrolled');
       }, { passive: true });
     })();
 
@@ -164,6 +162,30 @@ const {
         });
       }
       window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+
+    // ─── HEADLINE SCROLL-CLIP ───
+    // As the section scrolls out, the headline clips upward (like text going behind a wall)
+    (function() {
+      const headlines = document.querySelectorAll('.scroll-headline');
+      function update() {
+        const sy = window.scrollY;
+        headlines.forEach(el => {
+          const section = el.closest('section, .split-section');
+          if (!section) return;
+          const rect = section.getBoundingClientRect();
+          const vh = window.innerHeight;
+          // How far through the section's exit are we? 0 = just entering exit, 1 = fully gone
+          const exitStart = vh * 0.3; // start clipping when 30% above viewport center
+          const progress = Math.max(0, Math.min(1, -rect.top / (section.offsetHeight * 0.5)));
+          const translateY = progress * -60;
+          const opacity = 1 - progress * 1.4;
+          el.style.transform = `translateY(${translateY}px)`;
+          el.style.opacity = Math.max(0, opacity);
+        });
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
     })();
 
     // ─── COUNTER ANIMATION ───
@@ -225,13 +247,13 @@ const {
   ul[role="list"] { list-style: none; }
   a { text-decoration: none; color: inherit; }
   button { cursor: none; background: none; border: none; }
-  ::selection { background: rgba(196,56,127,0.2); color: #fff; }
+  ::selection { background: rgba(196,56,127,0.15); color: #fff; }
 
   /* ─── NOISE OVERLAY ─── */
   #noise {
     position: fixed; inset: 0; z-index: 9999; pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-    opacity: 0.028;
+    opacity: 0.025;
   }
 
   /* ─── CUSTOM CURSOR ─── */
@@ -239,7 +261,7 @@ const {
   #cursor-dot {
     position: fixed; top: -4px; left: -4px;
     width: 8px; height: 8px;
-    background: #c4387f;
+    background: rgba(232,232,240,0.9);
     border-radius: 50%;
     transition: opacity 0.3s;
     will-change: transform;
@@ -247,7 +269,7 @@ const {
   #cursor-ring {
     position: fixed; top: -20px; left: -20px;
     width: 40px; height: 40px;
-    border: 1.5px solid rgba(196,56,127,0.6);
+    border: 1px solid rgba(232,232,240,0.25);
     border-radius: 50%;
     transition: opacity 0.3s, width 0.3s, height 0.3s, top 0.3s, left 0.3s, border-color 0.3s;
     will-change: transform;
@@ -255,94 +277,124 @@ const {
   #cursor-ring.ring-hover {
     width: 60px; height: 60px;
     top: -30px; left: -30px;
-    border-color: #c4387f;
-    background: rgba(196,56,127,0.06);
+    border-color: rgba(196,56,127,0.5);
+    background: rgba(196,56,127,0.04);
   }
   #cursor-dot.dot-hover { background: #fff; }
 
-  /* ─── HEADER ─── */
+  /* ─── NOTCH NAV ─── */
+  /* Outer wrap: positions the notch pill in the top-center */
+  .notch-wrap {
+    position: fixed;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 900;
+    /* Start wide, shrink on scroll */
+    width: min(860px, 92vw);
+    transition: width 0.5s cubic-bezier(0.16,1,0.3,1), top 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+  .notch-wrap.notch-scrolled {
+    width: min(720px, 88vw);
+    top: 10px;
+  }
+
   .header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-    padding: 0;
-    transition: background 0.4s, border-color 0.4s;
-    border-bottom: 1px solid transparent;
+    background: rgba(12,12,16,0.82);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 50px; /* pill notch shape */
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+    transition: box-shadow 0.4s;
   }
-  .header.scrolled {
-    background: rgba(5,5,8,0.88);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom-color: rgba(196,56,127,0.12);
+  .notch-wrap.notch-scrolled .header {
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
   }
-  .navbar { padding: 1.25rem 0; }
+
+  .navbar { padding: 0; }
   .nav-container {
-    max-width: 1400px; margin: 0 auto; padding: 0 2rem;
+    max-width: 100%; margin: 0; padding: 0.7rem 1.5rem;
     display: flex; justify-content: space-between; align-items: center;
   }
   .logo {
-    display: flex; align-items: center; gap: 0.75rem;
+    display: flex; align-items: center; gap: 0.65rem;
     font-family: 'Space Mono', monospace;
-    font-size: 1.1rem; font-weight: 700; letter-spacing: 3px;
-    background: linear-gradient(135deg, #c4387f 0%, #8b22d9 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 0.95rem; font-weight: 700; letter-spacing: 3px;
+    color: #e8e8f0;
     transition: opacity 0.2s;
   }
-  .logo:hover { opacity: 0.8; }
+  /* Only the SVG carries the gradient, text stays white — less color */
+  .logo span {
+    background: none;
+    -webkit-text-fill-color: #e8e8f0;
+    color: #e8e8f0;
+  }
+  .logo:hover { opacity: 0.75; }
   .nav-links {
-    display: flex; list-style: none; align-items: center; gap: 2.5rem;
+    display: flex; list-style: none; align-items: center; gap: 2rem;
   }
   .nav-link {
-    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
-    color: rgba(232,232,240,0.7);
-    position: relative; padding-bottom: 4px;
-    transition: color 0.3s;
+    font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(232,232,240,0.55);
+    position: relative; padding-bottom: 2px;
+    transition: color 0.25s;
   }
   .nav-link::after {
     content: ''; position: absolute; bottom: 0; left: 0;
     width: 0; height: 1px;
-    background: linear-gradient(90deg, #c4387f, #8b22d9);
+    background: rgba(232,232,240,0.5);
     transition: width 0.3s;
   }
-  .nav-link:hover { color: #fff; }
+  .nav-link:hover { color: #e8e8f0; }
   .nav-link:hover::after { width: 100%; }
   .nav-cta {
-    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
-    padding: 0.6rem 1.4rem;
-    border: 1px solid #c4387f; color: #c4387f; border-radius: 2px;
-    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+    font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
+    padding: 0.45rem 1.2rem;
+    border: 1px solid rgba(196,56,127,0.5);
+    color: #e8e8f0;
+    border-radius: 50px;
+    transition: background 0.3s, border-color 0.3s;
   }
   .nav-cta:hover {
-    background: #c4387f; color: #fff;
-    box-shadow: 0 0 20px rgba(196,56,127,0.3);
+    background: rgba(196,56,127,0.15);
+    border-color: #c4387f;
   }
   .hamburger {
-    display: none; flex-direction: column; gap: 6px;
+    display: none; flex-direction: column; gap: 5px;
     padding: 8px; cursor: none;
   }
   .hamburger span {
-    display: block; width: 24px; height: 1.5px; background: #e8e8f0;
+    display: block; width: 22px; height: 1px; background: rgba(232,232,240,0.7);
     transition: transform 0.3s, opacity 0.3s;
     transform-origin: center;
   }
-  .hamburger.open span:first-child { transform: translateY(7.5px) rotate(45deg); }
-  .hamburger.open span:last-child { transform: translateY(-7.5px) rotate(-45deg); }
+  .hamburger.open span:first-child { transform: translateY(6px) rotate(45deg); }
+  .hamburger.open span:last-child { transform: translateY(-6px) rotate(-45deg); }
+  /* Mobile menu drops below the notch pill */
   .mobile-menu {
-    display: none; padding: 1rem 2rem 2rem;
-    background: rgba(5,5,8,0.97);
-    border-top: 1px solid rgba(196,56,127,0.1);
+    display: none; margin-top: 8px;
+    background: rgba(12,12,16,0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 0.5rem 1.5rem 1.5rem;
   }
   .mobile-menu.open { display: block; }
   .mobile-link {
-    display: block; padding: 1rem 0;
-    font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase;
-    color: rgba(232,232,240,0.7); border-bottom: 1px solid rgba(255,255,255,0.04);
-    transition: color 0.3s;
+    display: block; padding: 0.85rem 0;
+    font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(232,232,240,0.6);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: color 0.25s;
   }
-  .mobile-link:hover { color: #c4387f; }
+  .mobile-link:hover { color: #e8e8f0; }
   @media (max-width: 768px) {
     .nav-links { display: none; }
     .hamburger { display: flex; }
+    .notch-wrap { width: 92vw; top: 10px; }
   }
 
   /* ─── SCROLL REVEAL ─── */
@@ -364,37 +416,39 @@ const {
     [data-reveal] { opacity: 1; transform: none; transition: none; }
   }
 
+  /* ─── SCROLL HEADLINE — exit clip ─── */
+  /* Wraps h1/h2 — the JS drives translateY + opacity out as section exits */
+  .scroll-headline {
+    will-change: transform, opacity;
+    transition: none; /* JS handles this directly for smoothness */
+  }
+
   /* ─── BUTTONS ─── */
   .btn-primary {
     display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.9rem 2rem;
-    background: linear-gradient(135deg, #c4387f 0%, #8b22d9 100%);
+    padding: 0.85rem 1.8rem;
+    background: #c4387f;
     color: #fff;
-    font-size: 0.75rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
     border: 1px solid transparent; border-radius: 2px;
-    transition: box-shadow 0.3s, transform 0.2s, opacity 0.2s;
-    position: relative; overflow: hidden;
-  }
-  .btn-primary::before {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
-    opacity: 0; transition: opacity 0.3s;
+    transition: box-shadow 0.3s, transform 0.2s, background 0.3s;
+    position: relative;
   }
   .btn-primary:hover {
-    box-shadow: 0 0 28px rgba(196,56,127,0.4), 0 0 60px rgba(139,34,217,0.15);
+    background: #ae2e6f;
+    box-shadow: 0 4px 20px rgba(196,56,127,0.3);
     transform: translateY(-1px);
   }
-  .btn-primary:hover::before { opacity: 1; }
   .btn-primary:active { transform: translateY(0); }
   .btn-ghost {
     display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.9rem 2rem;
-    background: transparent; color: rgba(232,232,240,0.85);
-    font-size: 0.75rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase;
-    border: 1px solid rgba(232,232,240,0.2); border-radius: 2px;
+    padding: 0.85rem 1.8rem;
+    background: transparent; color: rgba(232,232,240,0.8);
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    border: 1px solid rgba(232,232,240,0.18); border-radius: 2px;
     transition: border-color 0.3s, color 0.3s;
   }
-  .btn-ghost:hover { border-color: rgba(232,232,240,0.6); color: #fff; }
+  .btn-ghost:hover { border-color: rgba(232,232,240,0.5); color: #fff; }
 
   /* ─── SCANLINE GLITCH ─── */
   @keyframes glitch-clip1 {
@@ -409,12 +463,10 @@ const {
   }
   .hero-title.glitch::before {
     content: attr(data-text); position: absolute; inset: 0;
-    color: #ff003c; animation: glitch-clip1 0.2s steps(2) forwards;
-    opacity: 0.7;
+    color: rgba(255,0,60,0.6); animation: glitch-clip1 0.2s steps(2) forwards;
   }
   .hero-title.glitch::after {
     content: attr(data-text); position: absolute; inset: 0;
-    color: #8b22d9; animation: glitch-clip2 0.2s steps(2) forwards;
-    opacity: 0.7;
+    color: rgba(139,34,217,0.5); animation: glitch-clip2 0.2s steps(2) forwards;
   }
 </style>

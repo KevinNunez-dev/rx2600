@@ -23,7 +23,7 @@ import Base from '../layouts/Base.astro';
       />
     </div>
 
-    <!-- Ambient Glow -->
+    <!-- Ambient Glow — toned way down -->
     <div class="hero-glow" aria-hidden="true"></div>
 
     <!-- Grid Lines -->
@@ -48,9 +48,12 @@ import Base from '../layouts/Base.astro';
         <p class="hero-eyebrow" data-reveal="up">
           <span class="eyebrow-bracket">[</span> System Designation RX-2600 <span class="eyebrow-bracket">]</span>
         </p>
-        <h1 class="hero-title" data-text="The Machine\nThat Heals." data-reveal="up" data-delay="100">
-          The Machine<br/>That Heals.
-        </h1>
+        <!-- scroll-headline wraps the h1 so JS can clip it out on scroll -->
+        <div class="scroll-headline">
+          <h1 class="hero-title" data-text="The Machine\nThat Heals." data-reveal="up" data-delay="100">
+            The Machine<br/>That Heals.
+          </h1>
+        </div>
         <p class="hero-subtitle" data-reveal="up" data-delay="200">
           A fully autonomous robotic therapy platform engineered to deliver
           consistent, non-surgical musculoskeletal treatment — with sub-millimeter
@@ -88,6 +91,9 @@ import Base from '../layouts/Base.astro';
       <div class="scroll-line"></div>
       <span>SCROLL</span>
     </div>
+
+    <!-- Section peek — bottom strip that teases the next section -->
+    <div class="section-peek" aria-hidden="true"></div>
   </section>
 
 
@@ -123,7 +129,8 @@ import Base from '../layouts/Base.astro';
        SECTION 01 — THE SYSTEM
   ═══════════════════════════════════════════ -->
   <section class="split-section" id="product">
-    <div class="split-media" data-parallax="0.25">
+    <!-- Image overlaps previous section — negative top margin + z-index stacking -->
+    <div class="split-media split-media-overlap" data-parallax="0.25">
       <img
         src="https://rx2600.com/wp-content/uploads/2026/06/4.jpeg"
         alt="RX2600 robotic arm performing a therapy session on a patient"
@@ -134,7 +141,9 @@ import Base from '../layouts/Base.astro';
     </div>
     <div class="split-content">
       <p class="section-index" data-reveal="up">01 / The System</p>
-      <h2 data-reveal="up" data-delay="100">Built for Precision.<br/>Built to Perform.</h2>
+      <div class="scroll-headline">
+        <h2 data-reveal="up" data-delay="100">Built for Precision.<br/>Built to Perform.</h2>
+      </div>
       <p class="body-text" data-reveal="up" data-delay="200">
         The RX2600 is not a massage chair. It is a medical-grade robotic
         therapy platform — engineered with the same precision standards as
@@ -185,7 +194,9 @@ import Base from '../layouts/Base.astro';
     </div>
     <div class="split-content">
       <p class="section-index" data-reveal="up">02 / Technology</p>
-      <h2 data-reveal="up" data-delay="100">Precision<br/>by Design.</h2>
+      <div class="scroll-headline">
+        <h2 data-reveal="up" data-delay="100">Precision<br/>by Design.</h2>
+      </div>
       <p class="body-text" data-reveal="up" data-delay="150">
         Where a human therapist introduces variable force, fatigue, and
         inconsistency — the RX2600 does not. Every stroke is identical
@@ -222,7 +233,7 @@ import Base from '../layouts/Base.astro';
        SECTION 03 — CLINICAL OUTCOMES
   ═══════════════════════════════════════════ -->
   <section class="split-section" id="clinical">
-    <div class="split-media" data-parallax="0.25">
+    <div class="split-media split-media-overlap" data-parallax="0.25">
       <img
         src="https://rx2600.com/wp-content/uploads/2026/06/3.jpeg"
         alt="Physical therapist operating the RX2600 robot on a patient in a clinic"
@@ -233,7 +244,9 @@ import Base from '../layouts/Base.astro';
     </div>
     <div class="split-content">
       <p class="section-index" data-reveal="up">03 / Clinical Outcomes</p>
-      <h2 data-reveal="up" data-delay="100">Real Results.<br/>Nationwide.</h2>
+      <div class="scroll-headline">
+        <h2 data-reveal="up" data-delay="100">Real Results.<br/>Nationwide.</h2>
+      </div>
       <p class="body-text" data-reveal="up" data-delay="150">
         Across a nationwide network of physical therapy and sports medicine
         clinics, the RX2600 has become the go-to advanced therapy platform —
@@ -264,7 +277,9 @@ import Base from '../layouts/Base.astro';
     </div>
     <div class="split-content">
       <p class="section-index" data-reveal="up">04 / For Clinic Owners</p>
-      <h2 data-reveal="up" data-delay="100">This Is the<br/>Future of Your Clinic.</h2>
+      <div class="scroll-headline">
+        <h2 data-reveal="up" data-delay="100">This Is the<br/>Future of Your Clinic.</h2>
+      </div>
       <p class="body-text" data-reveal="up" data-delay="150">
         Imagine offering a treatment that no other clinic in your market
         has. The RX2600 is not just equipment — it is a competitive weapon
@@ -273,19 +288,19 @@ import Base from '../layouts/Base.astro';
       </p>
       <ul class="benefit-list" data-reveal="up" data-delay="200">
         <li>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c4387f" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(232,232,240,0.5)" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
           New premium revenue stream — no additional staff headcount required
         </li>
         <li>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c4387f" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(232,232,240,0.5)" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
           Differentiate your practice across a nationwide network of leading clinics
         </li>
         <li>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c4387f" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(232,232,240,0.5)" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
           FDA registered — backed by 15+ years of clinical R&amp;D
         </li>
         <li>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c4387f" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(232,232,240,0.5)" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
           White-glove onboarding, clinical training &amp; dedicated ongoing support
         </li>
       </ul>
@@ -301,9 +316,11 @@ import Base from '../layouts/Base.astro';
     <div class="cta-bg" aria-hidden="true"></div>
     <div class="cta-inner">
       <p class="cta-eyebrow" data-reveal="up">[ Ready to Deploy ]</p>
-      <h2 class="cta-heading" id="cta-heading" data-reveal="up" data-delay="100">
-        Transform Your Clinic.<br/>Start Now.
-      </h2>
+      <div class="scroll-headline">
+        <h2 class="cta-heading" id="cta-heading" data-reveal="up" data-delay="100">
+          Transform Your Clinic.<br/>Start Now.
+        </h2>
+      </div>
       <p class="cta-body" data-reveal="up" data-delay="200">
         Join a nationwide network of forward-thinking clinics already delivering
         the future of physical therapy — backed by 15+ years of R&amp;D and FDA registered.
@@ -354,6 +371,10 @@ import Base from '../layouts/Base.astro';
   justify-content: flex-end;
   overflow: hidden;
   padding-top: 80px;
+  /* Rounded bottom corners so next section peeks in —
+     creates the "notch peaking" effect from the reference */
+  border-radius: 0 0 28px 28px;
+  z-index: 2;
 }
 
 .hero-bg {
@@ -370,8 +391,8 @@ import Base from '../layouts/Base.astro';
   width: min(55vw, 700px);
   height: auto;
   object-fit: contain;
-  opacity: 0.9;
-  filter: drop-shadow(0 0 60px rgba(196,56,127,0.22)) drop-shadow(0 0 120px rgba(139,26,220,0.10));
+  opacity: 0.85;
+  filter: drop-shadow(0 0 40px rgba(196,56,127,0.12));
   animation: robot-float 6s ease-in-out infinite;
 }
 @keyframes robot-float {
@@ -379,29 +400,31 @@ import Base from '../layouts/Base.astro';
   50% { transform: translateY(-16px); }
 }
 
+/* Color reduced: much weaker glow */
 .hero-glow {
   position: absolute;
   right: 0; top: 0;
   width: 60%; height: 100%;
-  background: radial-gradient(ellipse at 70% 50%, rgba(196,56,127,0.07) 0%, rgba(139,26,220,0.04) 40%, transparent 70%);
+  background: radial-gradient(ellipse at 70% 50%, rgba(196,56,127,0.04) 0%, transparent 65%);
   z-index: 1; pointer-events: none;
 }
 
+/* Grid: near-invisible, just structural feel */
 .hero-grid {
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background-image:
-    linear-gradient(rgba(196,56,127,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(196,56,127,0.05) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
   background-size: 80px 80px;
-  mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 80%);
 }
 
 .hero-scanline {
   position: absolute; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(196,56,127,0.2), rgba(139,26,220,0.15), transparent);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
   z-index: 2; pointer-events: none;
-  animation: scanline 6s linear infinite;
+  animation: scanline 8s linear infinite;
 }
 @keyframes scanline {
   0%   { top: -2px; opacity: 0; }
@@ -412,11 +435,11 @@ import Base from '../layouts/Base.astro';
 
 .hud-corner {
   position: absolute; z-index: 3; pointer-events: none;
-  width: 40px; height: 40px;
+  width: 32px; height: 32px;
 }
 .hud-tl { top: 96px; left: 24px; }
 .hud-br { bottom: 80px; right: 24px; }
-.hud-line { position: absolute; background: rgba(196,56,127,0.45); }
+.hud-line { position: absolute; background: rgba(255,255,255,0.15); }
 .hud-line-h { width: 100%; height: 1px; top: 0; left: 0; }
 .hud-line-v { width: 1px; height: 100%; top: 0; left: 0; }
 .hud-br .hud-line-h { top: auto; bottom: 0; }
@@ -434,10 +457,10 @@ import Base from '../layouts/Base.astro';
 
 .hero-eyebrow {
   font-family: 'Space Mono', monospace;
-  font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
-  color: #c4387f; margin-bottom: 1.5rem;
+  font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(232,232,240,0.4); margin-bottom: 1.5rem;
 }
-.eyebrow-bracket { opacity: 0.5; }
+.eyebrow-bracket { opacity: 0.35; }
 
 .hero-title {
   font-size: clamp(3rem, 8vw, 6.5rem);
@@ -449,10 +472,10 @@ import Base from '../layouts/Base.astro';
 }
 
 .hero-subtitle {
-  font-size: clamp(1rem, 1.5vw, 1.1rem);
-  line-height: 1.8;
-  color: rgba(232,232,240,0.65);
-  max-width: 480px;
+  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+  line-height: 1.85;
+  color: rgba(232,232,240,0.5);
+  max-width: 460px;
   margin-bottom: 2.5rem;
 }
 
@@ -460,9 +483,10 @@ import Base from '../layouts/Base.astro';
   display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
 }
 
+/* Status panel — color greatly reduced, monochrome border */
 .hero-status {
-  background: rgba(5,5,8,0.7);
-  border: 1px solid rgba(196,56,127,0.18);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 4px;
   padding: 1.5rem;
   backdrop-filter: blur(12px);
@@ -473,48 +497,49 @@ import Base from '../layouts/Base.astro';
   display: flex; align-items: center; gap: 0.6rem;
   margin-bottom: 1.25rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(196,56,127,0.12);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 .status-dot {
-  width: 8px; height: 8px; border-radius: 50%;
+  width: 7px; height: 7px; border-radius: 50%;
   background: #c4387f;
-  box-shadow: 0 0 8px #c4387f;
-  animation: pulse-dot 2s ease-in-out infinite;
+  box-shadow: 0 0 6px rgba(196,56,127,0.6);
+  animation: pulse-dot 2.5s ease-in-out infinite;
 }
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; box-shadow: 0 0 8px #c4387f; }
-  50% { opacity: 0.5; box-shadow: 0 0 20px #c4387f, 0 0 40px rgba(139,26,220,0.3); }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 .status-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.65rem; letter-spacing: 2px;
-  color: #c4387f;
+  font-size: 0.62rem; letter-spacing: 2px;
+  color: rgba(232,232,240,0.35);
 }
 .status-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
 .status-list li {
   display: flex; justify-content: space-between;
-  font-size: 0.72rem; gap: 1rem;
+  font-size: 0.7rem; gap: 1rem;
 }
 .status-key {
   font-family: 'Space Mono', monospace;
-  color: rgba(232,232,240,0.4);
+  color: rgba(232,232,240,0.3);
   text-transform: uppercase; letter-spacing: 1px;
 }
 .status-val {
-  color: rgba(232,232,240,0.9);
+  color: rgba(232,232,240,0.8);
   font-weight: 500; text-align: right;
 }
 
+/* Scroll cue — neutral, no pink */
 .scroll-cue {
-  position: absolute; bottom: 2rem; left: 50%;
+  position: absolute; bottom: 2.5rem; left: 50%;
   transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
   z-index: 10;
 }
 .scroll-line {
-  width: 1px; height: 50px;
-  background: linear-gradient(to bottom, rgba(196,56,127,0.8), transparent);
-  animation: scroll-drop 1.8s ease-in-out infinite;
+  width: 1px; height: 44px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+  animation: scroll-drop 2s ease-in-out infinite;
 }
 @keyframes scroll-drop {
   0%   { transform: scaleY(0); transform-origin: top; }
@@ -524,20 +549,31 @@ import Base from '../layouts/Base.astro';
 }
 .scroll-cue span {
   font-family: 'Space Mono', monospace;
-  font-size: 0.6rem; letter-spacing: 3px;
-  color: rgba(196,56,127,0.55);
+  font-size: 0.58rem; letter-spacing: 3px;
+  color: rgba(232,232,240,0.25);
+}
+
+/* Section peek — the bottom "notch" that peeks the next section */
+.section-peek {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 80px;
+  /* Gradient that reveals a sliver of the background (next section color) */
+  background: linear-gradient(to bottom, transparent 0%, rgba(5,5,8,0.0) 40%, rgba(5,5,8,0.6) 100%);
+  border-radius: 0 0 28px 28px;
+  z-index: 5; pointer-events: none;
 }
 
 
 /* ═══════════════════════════════════════════
-   STATS TICKER
+   STATS TICKER — monochrome, no gradient text
 ═══════════════════════════════════════════ */
 .stats-ticker {
-  background: rgba(196,56,127,0.04);
-  border-top: 1px solid rgba(196,56,127,0.12);
-  border-bottom: 1px solid rgba(196,56,127,0.12);
+  background: rgba(255,255,255,0.02);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
   padding: 2.5rem 2rem;
   overflow: hidden;
+  position: relative; z-index: 1;
 }
 .ticker-track {
   max-width: 1400px; margin: 0 auto;
@@ -552,19 +588,16 @@ import Base from '../layouts/Base.astro';
   font-family: 'Space Mono', monospace;
   font-size: clamp(1.8rem, 3vw, 2.5rem);
   font-weight: 700;
-  background: linear-gradient(135deg, #c4387f 0%, #8b22d9 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #fff; /* No gradient — just clean white */
   line-height: 1;
 }
 .ticker-label {
-  font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
-  color: rgba(232,232,240,0.45);
+  font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(232,232,240,0.3);
 }
 .ticker-divider {
   font-family: 'Space Mono', monospace;
-  font-size: 1rem; color: rgba(196,56,127,0.25);
+  font-size: 0.9rem; color: rgba(255,255,255,0.1);
   letter-spacing: 2px;
 }
 
@@ -577,7 +610,8 @@ import Base from '../layouts/Base.astro';
   grid-template-columns: 1fr 1fr;
   min-height: 90vh;
   position: relative;
-  overflow: hidden;
+  /* Sections stack with z-index so images "slide over" previous section */
+  isolation: isolate;
 }
 .split-section.split-reverse { direction: rtl; }
 .split-section.split-reverse > * { direction: ltr; }
@@ -586,6 +620,14 @@ import Base from '../layouts/Base.astro';
   position: relative; overflow: hidden;
   will-change: transform;
 }
+/* Overlap effect: image panel slightly overlaps the top of section,
+   creating the "slides onto the previous view" illusion */
+.split-media-overlap {
+  margin-top: -40px;
+  border-radius: 20px 20px 0 0;
+  overflow: hidden;
+  z-index: 3;
+}
 .split-media img {
   width: 100%; height: 100%;
   object-fit: cover;
@@ -593,11 +635,11 @@ import Base from '../layouts/Base.astro';
 }
 .media-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to right, rgba(5,5,8,0.5), transparent 60%);
+  background: linear-gradient(to right, rgba(5,5,8,0.45), transparent 55%);
   z-index: 1;
 }
 .split-section.split-reverse .media-overlay {
-  background: linear-gradient(to left, rgba(5,5,8,0.5), transparent 60%);
+  background: linear-gradient(to left, rgba(5,5,8,0.45), transparent 55%);
 }
 
 .split-content {
@@ -606,19 +648,19 @@ import Base from '../layouts/Base.astro';
   background: #050508;
   position: relative; z-index: 2;
 }
+/* Accent line: near-invisible, monochrome */
 .split-content::before {
   content: '';
-  position: absolute; left: 0; top: 10%; bottom: 10%;
+  position: absolute; left: 0; top: 15%; bottom: 15%;
   width: 1px;
-  background: linear-gradient(to bottom, transparent, rgba(196,56,127,0.2), rgba(139,26,220,0.1), transparent);
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.07), transparent);
 }
 .split-section.split-reverse .split-content::before { left: auto; right: 0; }
 
 .section-index {
   font-family: 'Space Mono', monospace;
-  font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
-  color: #c4387f; margin-bottom: 1.5rem;
-  opacity: 0.8;
+  font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(232,232,240,0.3); margin-bottom: 1.5rem;
 }
 
 .split-content h2 {
@@ -628,9 +670,9 @@ import Base from '../layouts/Base.astro';
 }
 
 .body-text {
-  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  font-size: clamp(0.93rem, 1.2vw, 1.02rem);
   line-height: 1.85;
-  color: rgba(232,232,240,0.65);
+  color: rgba(232,232,240,0.5);
   max-width: 520px;
   margin-bottom: 1.25rem;
 }
@@ -641,26 +683,26 @@ import Base from '../layouts/Base.astro';
   margin: 1.5rem 0 2rem;
 }
 .feature-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
   border-radius: 4px;
-  padding: 1.25rem;
+  padding: 1.2rem;
   transition: border-color 0.3s, background 0.3s;
 }
 .feature-card:hover {
-  border-color: rgba(196,56,127,0.25);
-  background: rgba(196,56,127,0.04);
+  border-color: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
 }
 .feature-num {
   font-family: 'Space Mono', monospace;
-  font-size: 0.65rem; color: #c4387f; margin-bottom: 0.5rem;
+  font-size: 0.62rem; color: rgba(232,232,240,0.3); margin-bottom: 0.5rem;
 }
 .feature-title {
-  font-size: 0.85rem; font-weight: 600; color: #fff; margin-bottom: 0.4rem;
+  font-size: 0.83rem; font-weight: 600; color: #fff; margin-bottom: 0.4rem;
 }
 .feature-body {
-  font-size: 0.78rem; line-height: 1.6;
-  color: rgba(232,232,240,0.5);
+  font-size: 0.76rem; line-height: 1.6;
+  color: rgba(232,232,240,0.4);
 }
 
 .benefit-list {
@@ -670,10 +712,10 @@ import Base from '../layouts/Base.astro';
 }
 .benefit-list li {
   display: flex; align-items: flex-start; gap: 0.75rem;
-  font-size: 0.92rem;
-  color: rgba(232,232,240,0.75);
+  font-size: 0.9rem;
+  color: rgba(232,232,240,0.6);
 }
-.benefit-list svg { flex-shrink: 0; margin-top: 2px; }
+.benefit-list svg { flex-shrink: 0; margin-top: 3px; }
 
 
 /* ═══════════════════════════════════════════
@@ -681,7 +723,10 @@ import Base from '../layouts/Base.astro';
 ═══════════════════════════════════════════ */
 .cinematic-block {
   position: relative; overflow: hidden;
-  height: clamp(320px, 40vw, 600px);
+  height: clamp(320px, 40vw, 580px);
+  border-radius: 20px;
+  margin: 0 2rem;
+  isolation: isolate;
 }
 .cinematic-inner {
   width: 100%; height: 120%;
@@ -691,15 +736,15 @@ import Base from '../layouts/Base.astro';
 .cinematic-inner img {
   width: 100%; height: 100%;
   object-fit: cover;
-  filter: brightness(0.55) saturate(0.8);
+  filter: brightness(0.5) saturate(0.7);
 }
 .cinematic-caption {
-  position: absolute; bottom: 2rem; right: 2rem;
+  position: absolute; bottom: 1.5rem; right: 1.5rem;
   font-family: 'Space Mono', monospace;
-  font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
-  color: rgba(232,232,240,0.4);
+  font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(232,232,240,0.3);
 }
-.cinematic-caption span { color: #c4387f; }
+.cinematic-caption span { color: rgba(232,232,240,0.6); }
 
 
 /* ═══════════════════════════════════════════
@@ -713,26 +758,23 @@ import Base from '../layouts/Base.astro';
 }
 .cta-bg {
   position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse at 30% 50%, rgba(196,56,127,0.09) 0%, transparent 55%),
-    radial-gradient(ellipse at 70% 50%, rgba(139,26,220,0.07) 0%, transparent 55%),
-    linear-gradient(to bottom, #050508, #080810, #050508);
+  background: linear-gradient(to bottom, #050508, #08080e, #050508);
   z-index: 0;
 }
+/* Subtle grid only, no glow radials */
 .cta-bg::before {
   content: '';
   position: absolute; inset: 0;
   background-image:
-    linear-gradient(rgba(196,56,127,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(196,56,127,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
   background-size: 60px 60px;
 }
-.cta-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+.cta-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
 .cta-eyebrow {
   font-family: 'Space Mono', monospace;
-  font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
-  color: #c4387f; margin-bottom: 1.5rem;
-  opacity: 0.8;
+  font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(232,232,240,0.3); margin-bottom: 1.5rem;
 }
 .cta-heading {
   font-size: clamp(2.5rem, 6vw, 4.5rem);
@@ -740,8 +782,8 @@ import Base from '../layouts/Base.astro';
   color: #fff; margin-bottom: 1.5rem;
 }
 .cta-body {
-  font-size: 1.05rem; line-height: 1.8;
-  color: rgba(232,232,240,0.6);
+  font-size: 1rem; line-height: 1.8;
+  color: rgba(232,232,240,0.45);
   margin-bottom: 3rem;
 }
 .cta-actions { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
@@ -752,7 +794,7 @@ import Base from '../layouts/Base.astro';
 ═══════════════════════════════════════════ */
 .site-footer {
   background: #030305;
-  border-top: 1px solid rgba(196,56,127,0.08);
+  border-top: 1px solid rgba(255,255,255,0.04);
   padding: 3rem 2rem;
 }
 .footer-inner {
@@ -764,26 +806,23 @@ import Base from '../layouts/Base.astro';
 .footer-brand { display: flex; flex-direction: column; gap: 0.25rem; }
 .footer-logo {
   font-family: 'Space Mono', monospace;
-  font-size: 1.1rem; font-weight: 700; letter-spacing: 3px;
-  background: linear-gradient(135deg, #c4387f 0%, #8b22d9 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 1rem; font-weight: 700; letter-spacing: 3px;
+  color: rgba(232,232,240,0.7);
 }
 .footer-powered {
-  font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
-  color: rgba(232,232,240,0.3);
+  font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(232,232,240,0.2);
 }
 .footer-links { display: flex; gap: 2rem; }
 .footer-links a {
-  font-size: 0.8rem; letter-spacing: 1px;
-  color: rgba(232,232,240,0.45);
+  font-size: 0.78rem; letter-spacing: 1px;
+  color: rgba(232,232,240,0.35);
   transition: color 0.3s;
 }
-.footer-links a:hover { color: #c4387f; }
+.footer-links a:hover { color: rgba(232,232,240,0.8); }
 .footer-copy {
-  font-size: 0.72rem;
-  color: rgba(232,232,240,0.25);
+  font-size: 0.7rem;
+  color: rgba(232,232,240,0.2);
 }
 
 
@@ -793,12 +832,13 @@ import Base from '../layouts/Base.astro';
 @media (max-width: 1024px) {
   .hero-content { grid-template-columns: 1fr; }
   .hero-status { display: none; }
-  .hero-robot-img { width: 70vw; opacity: 0.25; position: absolute; right: -5%; bottom: 0; }
+  .hero-robot-img { width: 70vw; opacity: 0.2; position: absolute; right: -5%; bottom: 0; }
 }
 @media (max-width: 768px) {
   .split-section { grid-template-columns: 1fr; min-height: auto; }
   .split-section.split-reverse { direction: ltr; }
-  .split-media { height: 55vw; max-height: 400px; }
+  .split-media { height: 55vw; max-height: 380px; }
+  .split-media-overlap { margin-top: -20px; border-radius: 14px 14px 0 0; }
   .split-content { padding: 2.5rem 1.5rem; }
   .split-content::before { display: none; }
   .feature-grid { grid-template-columns: 1fr; }
@@ -808,5 +848,6 @@ import Base from '../layouts/Base.astro';
   .ticker-track { gap: 1.5rem; }
   .footer-inner { flex-direction: column; text-align: center; }
   .footer-links { justify-content: center; }
+  .cinematic-block { margin: 0 1rem; border-radius: 14px; }
 }
 </style>
