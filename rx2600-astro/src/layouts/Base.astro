@@ -33,8 +33,12 @@ const {
   <!-- Noise Overlay -->
   <div id="noise" aria-hidden="true"></div>
 
-  <!-- Navigation — iPhone-notch style -->
-  <div class="notch-wrap" id="notch-wrap">
+  <!--
+    NAV — Full-width expanded state on load.
+    Items float at edges of the screen (logo far left, links far right).
+    On scroll >50px: collapses into a centered pill container.
+  -->
+  <div class="nav-outer" id="nav-outer">
     <header class="header" id="header">
       <nav class="navbar">
         <div class="nav-container">
@@ -46,8 +50,8 @@ const {
               <rect x="20" y="13" width="8" height="10" rx="1" stroke="url(#logo-grad)" stroke-width="1.5" fill="none"/>
               <defs>
                 <linearGradient id="logo-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#c4387f"/>
-                  <stop offset="100%" stop-color="#8b22d9"/>
+                  <stop offset="0%" stop-color="#7c3aed"/>
+                  <stop offset="100%" stop-color="#4c1d95"/>
                 </linearGradient>
               </defs>
             </svg>
@@ -107,12 +111,12 @@ const {
       document.addEventListener('mouseenter', () => { dot.style.opacity='1'; ring.style.opacity='1'; });
     })();
 
-    // ─── NOTCH SCROLL SHRINK ───
+    // ─── NAV COLLAPSE: full-width → pill on scroll ───
     (function() {
-      const wrap = document.getElementById('notch-wrap');
+      const outer = document.getElementById('nav-outer');
       window.addEventListener('scroll', () => {
-        if (window.scrollY > 40) wrap.classList.add('notch-scrolled');
-        else wrap.classList.remove('notch-scrolled');
+        if (window.scrollY > 50) outer.classList.add('nav-collapsed');
+        else outer.classList.remove('nav-collapsed');
       }, { passive: true });
     })();
 
@@ -231,7 +235,7 @@ const {
     -moz-osx-font-smoothing: grayscale;
   }
   body {
-    background: #050508;
+    background: #000000;
     color: #e8e8f0;
     font-family: 'Space Grotesk', system-ui, sans-serif;
     line-height: 1.6;
@@ -243,7 +247,7 @@ const {
   ul[role="list"] { list-style: none; }
   a { text-decoration: none; color: inherit; }
   button { cursor: none; background: none; border: none; }
-  ::selection { background: rgba(196,56,127,0.15); color: #fff; }
+  ::selection { background: rgba(124,58,237,0.2); color: #fff; }
 
   /* ─── NOISE OVERLAY ─── */
   #noise {
@@ -265,7 +269,7 @@ const {
   #cursor-ring {
     position: fixed; top: -20px; left: -20px;
     width: 40px; height: 40px;
-    border: 1px solid rgba(232,232,240,0.25);
+    border: 1px solid rgba(232,232,240,0.2);
     border-radius: 50%;
     transition: opacity 0.3s, width 0.3s, height 0.3s, top 0.3s, left 0.3s, border-color 0.3s;
     will-change: transform;
@@ -273,43 +277,86 @@ const {
   #cursor-ring.ring-hover {
     width: 60px; height: 60px;
     top: -30px; left: -30px;
-    border-color: rgba(196,56,127,0.5);
-    background: rgba(196,56,127,0.04);
+    border-color: rgba(124,58,237,0.5);
+    background: rgba(124,58,237,0.04);
   }
   #cursor-dot.dot-hover { background: #fff; }
 
-  /* ─── NOTCH NAV ─── */
-  .notch-wrap {
+  /* ═══════════════════════════════════════════
+     NAV — EXPANDED → PILL COLLAPSE
+     On page load: nav-outer is position:fixed, full viewport width.
+     The header has NO background — items float over the page.
+     Logo is at the far left, links at the far right, side padding = 2rem.
+     On scroll: nav-outer gets .nav-collapsed.
+       - Width shrinks to a centered pill via left/right/transform
+       - header gets the frosted pill background + border-radius
+  ═══════════════════════════════════════════ */
+
+  /* EXPANDED STATE — items float edge to edge, no container bg */
+  .nav-outer {
     position: fixed;
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 16px;
+    left: 0;
+    right: 0;
     z-index: 900;
-    width: min(860px, 92vw);
-    transition: width 0.5s cubic-bezier(0.16,1,0.3,1), top 0.5s cubic-bezier(0.16,1,0.3,1);
+    padding: 0 2rem;
+    /* Smooth morph into pill */
+    transition:
+      left   0.6s cubic-bezier(0.16,1,0.3,1),
+      right  0.6s cubic-bezier(0.16,1,0.3,1),
+      top    0.5s cubic-bezier(0.16,1,0.3,1),
+      padding 0.6s cubic-bezier(0.16,1,0.3,1);
   }
-  .notch-wrap.notch-scrolled {
-    width: min(720px, 88vw);
-    top: 10px;
-  }
+
+  /* Header: transparent in expanded, gets glass in collapsed */
   .header {
-    background: rgba(12,12,16,0.82);
-    backdrop-filter: blur(24px) saturate(160%);
-    -webkit-backdrop-filter: blur(24px) saturate(160%);
-    border: 1px solid rgba(255,255,255,0.07);
+    background: transparent;
+    border: 1px solid transparent;
     border-radius: 50px;
     overflow: hidden;
-    box-shadow: 0 4px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
-    transition: box-shadow 0.4s;
+    box-shadow: none;
+    transition:
+      background 0.5s cubic-bezier(0.16,1,0.3,1),
+      border-color 0.5s cubic-bezier(0.16,1,0.3,1),
+      box-shadow 0.5s cubic-bezier(0.16,1,0.3,1),
+      border-radius 0.5s cubic-bezier(0.16,1,0.3,1);
   }
-  .notch-wrap.notch-scrolled .header {
-    box-shadow: 0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
+
+  /* COLLAPSED STATE — morph into a centered pill */
+  .nav-outer.nav-collapsed {
+    left: 50%;
+    right: auto;
+    width: min(780px, 88vw);
+    transform: translateX(-50%);
+    padding: 0;
+    top: 12px;
+    transition:
+      left   0.6s cubic-bezier(0.16,1,0.3,1),
+      right  0.6s cubic-bezier(0.16,1,0.3,1),
+      top    0.5s cubic-bezier(0.16,1,0.3,1),
+      width  0.6s cubic-bezier(0.16,1,0.3,1),
+      padding 0.6s cubic-bezier(0.16,1,0.3,1);
   }
+  .nav-outer.nav-collapsed .header {
+    background: rgba(5,5,8,0.88);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border-color: rgba(255,255,255,0.07);
+    box-shadow: 0 4px 32px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
   .navbar { padding: 0; }
   .nav-container {
-    max-width: 100%; margin: 0; padding: 0.7rem 1.5rem;
+    max-width: 100%; margin: 0;
+    padding: 0.75rem 1.5rem;
     display: flex; justify-content: space-between; align-items: center;
   }
+
+  /* Expanded: slightly more side padding so logo sits at edge */
+  .nav-outer:not(.nav-collapsed) .nav-container {
+    padding: 0.75rem 0.5rem;
+  }
+
   .logo {
     display: flex; align-items: center; gap: 0.65rem;
     font-family: 'Space Mono', monospace;
@@ -317,32 +364,38 @@ const {
     color: #e8e8f0;
     transition: opacity 0.2s;
   }
-  .logo span { background: none; -webkit-text-fill-color: #e8e8f0; color: #e8e8f0; }
-  .logo:hover { opacity: 0.75; }
+  .logo span { color: #e8e8f0; }
+  .logo:hover { opacity: 0.7; }
+
   .nav-links { display: flex; list-style: none; align-items: center; gap: 2rem; }
   .nav-link {
     font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase;
-    color: rgba(232,232,240,0.55);
+    color: rgba(232,232,240,0.5);
     position: relative; padding-bottom: 2px;
     transition: color 0.25s;
   }
   .nav-link::after {
     content: ''; position: absolute; bottom: 0; left: 0;
     width: 0; height: 1px;
-    background: rgba(232,232,240,0.5);
+    background: rgba(232,232,240,0.4);
     transition: width 0.3s;
   }
   .nav-link:hover { color: #e8e8f0; }
   .nav-link:hover::after { width: 100%; }
+
   .nav-cta {
     font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
     padding: 0.45rem 1.2rem;
-    border: 1px solid rgba(196,56,127,0.5);
+    border: 1px solid rgba(124,58,237,0.45);
     color: #e8e8f0;
     border-radius: 50px;
     transition: background 0.3s, border-color 0.3s;
   }
-  .nav-cta:hover { background: rgba(196,56,127,0.15); border-color: #c4387f; }
+  .nav-cta:hover {
+    background: rgba(124,58,237,0.15);
+    border-color: #7c3aed;
+  }
+
   .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: none; }
   .hamburger span {
     display: block; width: 22px; height: 1px; background: rgba(232,232,240,0.7);
@@ -351,11 +404,12 @@ const {
   }
   .hamburger.open span:first-child { transform: translateY(6px) rotate(45deg); }
   .hamburger.open span:last-child { transform: translateY(-6px) rotate(-45deg); }
+
   .mobile-menu {
     display: none; margin-top: 8px;
-    background: rgba(12,12,16,0.95);
+    background: rgba(0,0,0,0.97);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.06);
     border-radius: 20px;
     overflow: hidden;
     padding: 0.5rem 1.5rem 1.5rem;
@@ -364,15 +418,17 @@ const {
   .mobile-link {
     display: block; padding: 0.85rem 0;
     font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;
-    color: rgba(232,232,240,0.6);
+    color: rgba(232,232,240,0.55);
     border-bottom: 1px solid rgba(255,255,255,0.04);
     transition: color 0.25s;
   }
   .mobile-link:hover { color: #e8e8f0; }
+
   @media (max-width: 768px) {
     .nav-links { display: none; }
     .hamburger { display: flex; }
-    .notch-wrap { width: 92vw; top: 10px; }
+    .nav-outer { left: 0; right: 0; padding: 0 1rem; top: 10px; }
+    .nav-outer.nav-collapsed { width: 94vw; }
   }
 
   /* ─── SCROLL REVEAL ─── */
@@ -401,7 +457,7 @@ const {
   .btn-primary {
     display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.85rem 1.8rem;
-    background: #c4387f;
+    background: #6b21e8;
     color: #fff;
     font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
     border: 1px solid transparent; border-radius: 2px;
@@ -409,8 +465,8 @@ const {
     position: relative;
   }
   .btn-primary:hover {
-    background: #ae2e6f;
-    box-shadow: 0 4px 20px rgba(196,56,127,0.3);
+    background: #5b17cc;
+    box-shadow: 0 4px 24px rgba(107,33,232,0.35);
     transform: translateY(-1px);
   }
   .btn-primary:active { transform: translateY(0); }
@@ -419,10 +475,10 @@ const {
     padding: 0.85rem 1.8rem;
     background: transparent; color: rgba(232,232,240,0.8);
     font-size: 0.72rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-    border: 1px solid rgba(232,232,240,0.18); border-radius: 2px;
+    border: 1px solid rgba(232,232,240,0.15); border-radius: 2px;
     transition: border-color 0.3s, color 0.3s;
   }
-  .btn-ghost:hover { border-color: rgba(232,232,240,0.5); color: #fff; }
+  .btn-ghost:hover { border-color: rgba(232,232,240,0.45); color: #fff; }
 
   /* ─── SCANLINE GLITCH ─── */
   @keyframes glitch-clip1 {
@@ -437,10 +493,10 @@ const {
   }
   .hero-title.glitch::before {
     content: attr(data-text); position: absolute; inset: 0;
-    color: rgba(255,0,60,0.6); animation: glitch-clip1 0.2s steps(2) forwards;
+    color: rgba(255,0,60,0.5); animation: glitch-clip1 0.2s steps(2) forwards;
   }
   .hero-title.glitch::after {
     content: attr(data-text); position: absolute; inset: 0;
-    color: rgba(139,34,217,0.5); animation: glitch-clip2 0.2s steps(2) forwards;
+    color: rgba(107,33,232,0.5); animation: glitch-clip2 0.2s steps(2) forwards;
   }
 </style>
