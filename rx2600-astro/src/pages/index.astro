@@ -2,500 +2,800 @@
 import Base from '../layouts/Base.astro';
 ---
 
-<Base>
-  <!-- ─── HERO SECTION ─── -->
+<Base
+  title="RX2600 — Robotic Therapy System"
+  description="The RX2600 is a next-generation robotic therapy system delivering non-surgical precision treatment for pain relief and mobility restoration."
+>
+
+  <!-- ═══════════════════════════════════════════
+       HERO SECTION
+  ═══════════════════════════════════════════ -->
   <section class="hero" id="hero">
-    <div class="hero-media">
-      <canvas id="3d-viewer"></canvas>
+    <!-- Parallax BG -->
+    <div class="hero-bg" data-parallax="0.4" aria-hidden="true">
+      <img
+        src="https://rx2600.com/wp-content/uploads/2024/04/robot-up-close-transparent.png"
+        alt=""
+        width="900"
+        height="900"
+        loading="eager"
+        class="hero-robot-img"
+      />
     </div>
+
+    <!-- Ambient Glow -->
+    <div class="hero-glow" aria-hidden="true"></div>
+
+    <!-- Grid Lines -->
+    <div class="hero-grid" aria-hidden="true"></div>
+
+    <!-- Scan Line -->
+    <div class="hero-scanline" aria-hidden="true"></div>
+
+    <!-- Corner HUD elements -->
+    <div class="hud-corner hud-tl" aria-hidden="true">
+      <span class="hud-line hud-line-h"></span>
+      <span class="hud-line hud-line-v"></span>
+    </div>
+    <div class="hud-corner hud-br" aria-hidden="true">
+      <span class="hud-line hud-line-h"></span>
+      <span class="hud-line hud-line-v"></span>
+    </div>
+
     <div class="hero-content">
-      <div class="hero-text">
-        <p class="hero-eyebrow">Powered by RPT</p>
-        <h1 class="hero-title">The Future<br/>of Therapy.</h1>
-        <p class="hero-subtitle">
-          Non-surgical robotic therapy that lengthens muscle tissue,
-          reduces pain, and restores mobility — session after session.
+      <!-- Left Column -->
+      <div class="hero-left">
+        <p class="hero-eyebrow" data-reveal="up">
+          <span class="eyebrow-bracket">[</span> System Designation RX-2600 <span class="eyebrow-bracket">]</span>
         </p>
-        <div class="hero-cta">
+        <h1 class="hero-title" data-text="The Machine\nThat Heals." data-reveal="up" data-delay="100">
+          The Machine<br/>That Heals.
+        </h1>
+        <p class="hero-subtitle" data-reveal="up" data-delay="200">
+          A fully autonomous robotic therapy platform engineered to deliver
+          consistent, non-surgical musculoskeletal treatment — with sub-millimeter
+          precision, session after session.
+        </p>
+        <div class="hero-cta" data-reveal="up" data-delay="300">
           <a href="#contact" class="btn-primary">Request a Demo</a>
           <a href="#product" class="btn-ghost">
-            See how it works
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            How it works
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </a>
         </div>
       </div>
-      <div class="scroll-indicator">
-        <span>Scroll</span>
+
+      <!-- Right: Status Panel -->
+      <aside class="hero-status" data-reveal="right" data-delay="400" aria-label="System status">
+        <div class="status-header">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="status-label">SYSTEM ONLINE</span>
+        </div>
+        <ul class="status-list" role="list">
+          <li><span class="status-key">Unit</span><span class="status-val">RX-2600 / Gen 3</span></li>
+          <li><span class="status-key">Mode</span><span class="status-val">Therapy Active</span></li>
+          <li><span class="status-key">Force Output</span><span class="status-val">±0.1N Precision</span></li>
+          <li><span class="status-key">Protocol</span><span class="status-val">RPT™ Certified</span></li>
+          <li><span class="status-key">Patients Treated</span><span class="status-val">10,000+</span></li>
+        </ul>
+      </aside>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-cue" aria-hidden="true">
+      <div class="scroll-line"></div>
+      <span>SCROLL</span>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       STATS TICKER
+  ═══════════════════════════════════════════ -->
+  <div class="stats-ticker" aria-label="Key statistics">
+    <div class="ticker-track">
+      <div class="ticker-item">
+        <span class="ticker-num" data-count="10000" data-suffix="+">0+</span>
+        <span class="ticker-label">Patients Treated</span>
+      </div>
+      <div class="ticker-divider" aria-hidden="true">///</div>
+      <div class="ticker-item">
+        <span class="ticker-num" data-count="98" data-suffix="%">0%</span>
+        <span class="ticker-label">Report Pain Reduction</span>
+      </div>
+      <div class="ticker-divider" aria-hidden="true">///</div>
+      <div class="ticker-item">
+        <span class="ticker-num" data-count="500" data-suffix="+">0+</span>
+        <span class="ticker-label">Clinic Partners</span>
+      </div>
+      <div class="ticker-divider" aria-hidden="true">///</div>
+      <div class="ticker-item">
+        <span class="ticker-num" data-count="3" data-suffix="rd Gen">1st Gen</span>
+        <span class="ticker-label">Robotic Platform</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 01 — THE SYSTEM
+  ═══════════════════════════════════════════ -->
+  <section class="split-section" id="product">
+    <div class="split-media" data-parallax="0.25">
+      <img
+        src="https://rx2600.com/wp-content/uploads/2026/06/4.jpeg"
+        alt="RX2600 robotic arm performing a therapy session on a patient"
+        width="800" height="900"
+        loading="lazy"
+      />
+      <div class="media-overlay" aria-hidden="true"></div>
+    </div>
+    <div class="split-content">
+      <p class="section-index" data-reveal="up">01 / The System</p>
+      <h2 data-reveal="up" data-delay="100">Built for Precision.<br/>Built to Perform.</h2>
+      <p class="body-text" data-reveal="up" data-delay="200">
+        The RX2600 is not a massage chair. It is a medical-grade robotic
+        therapy platform — engineered with the same precision standards as
+        surgical robotics, without a single incision.
+      </p>
+      <p class="body-text" data-reveal="up" data-delay="250">
+        Using Robotic Percussion Therapy (RPT™), the system delivers
+        calibrated longitudinal force deep into soft tissue — lengthening
+        contracted muscles, restoring joint range of motion, and breaking
+        the pain cycle at its source.
+      </p>
+      <a href="#technology" class="btn-primary" data-reveal="up" data-delay="300">Explore the Tech</a>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       FULL BLEED CINEMATIC
+  ═══════════════════════════════════════════ -->
+  <div class="cinematic-block" aria-label="RX2600 robot with therapists in a clinic">
+    <div class="cinematic-inner" data-parallax="0.2">
+      <img
+        src="https://rx2600.com/wp-content/uploads/2025/02/Robots-and-2-therapists-scaled.jpg"
+        alt="RX2600 robotic therapy system with two licensed physical therapists in a modern clinic"
+        width="1920" height="800"
+        loading="lazy"
+      />
+    </div>
+    <div class="cinematic-caption" aria-hidden="true">
+      <span>RX2600</span> in clinical operation
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 02 — TECHNOLOGY
+  ═══════════════════════════════════════════ -->
+  <section class="split-section split-reverse" id="technology">
+    <div class="split-media" data-parallax="0.25">
+      <img
+        src="https://rx2600.com/wp-content/uploads/2024/04/robot-up-close-transparent.png"
+        alt="RX2600 robotic arm head close-up showing precision engineering"
+        width="800" height="900"
+        loading="lazy"
+        style="object-fit: contain; padding: 2rem;"
+      />
+      <div class="media-overlay" aria-hidden="true"></div>
+    </div>
+    <div class="split-content">
+      <p class="section-index" data-reveal="up">02 / Technology</p>
+      <h2 data-reveal="up" data-delay="100">Precision<br/>by Design.</h2>
+      <p class="body-text" data-reveal="up" data-delay="150">
+        Where a human therapist introduces variable force, fatigue, and
+        inconsistency — the RX2600 does not. Every stroke is identical
+        to the last. Every session is clinically repeatable.
+      </p>
+
+      <ul class="feature-grid" data-reveal="up" data-delay="200">
+        <li class="feature-card">
+          <p class="feature-num">01</p>
+          <p class="feature-title">Robotic Consistency</p>
+          <p class="feature-body">Sub-millimeter precision force delivered without variation or therapist fatigue.</p>
+        </li>
+        <li class="feature-card">
+          <p class="feature-num">02</p>
+          <p class="feature-title">Non-Surgical</p>
+          <p class="feature-body">Deep tissue lengthening — no incision, no anesthesia, no downtime.</p>
+        </li>
+        <li class="feature-card">
+          <p class="feature-num">03</p>
+          <p class="feature-title">Pain Source Targeting</p>
+          <p class="feature-body">Attacks muscular pain at its root — not just the symptom, but the contracted tissue causing it.</p>
+        </li>
+        <li class="feature-card">
+          <p class="feature-num">04</p>
+          <p class="feature-title">RPT™ Protocol</p>
+          <p class="feature-body">Proprietary Robotic Percussion Therapy — the only system of its kind cleared for clinical use.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 03 — CLINICAL OUTCOMES
+  ═══════════════════════════════════════════ -->
+  <section class="split-section" id="clinical">
+    <div class="split-media" data-parallax="0.25">
+      <img
+        src="https://rx2600.com/wp-content/uploads/2026/06/3.jpeg"
+        alt="Physical therapist operating the RX2600 robot on a patient in a clinic"
+        width="800" height="900"
+        loading="lazy"
+      />
+      <div class="media-overlay" aria-hidden="true"></div>
+    </div>
+    <div class="split-content">
+      <p class="section-index" data-reveal="up">03 / Clinical Outcomes</p>
+      <h2 data-reveal="up" data-delay="100">Real Results.<br/>Verified by Clinics.</h2>
+      <p class="body-text" data-reveal="up" data-delay="150">
+        Physical therapists and sports medicine clinics across the country
+        are deploying RX2600 as their primary advanced therapy tool —
+        reporting outcomes they could not achieve with manual techniques alone.
+      </p>
+      <p class="body-text" data-reveal="up" data-delay="200">
+        From chronic low-back pain to post-surgical rehab, athletes to elderly
+        patients — the RX2600 delivers measurable mobility gains and pain
+        reduction across every demographic, every session.
+      </p>
+      <a href="#contact" class="btn-primary" data-reveal="up" data-delay="300">See Clinic Results</a>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 04 — FOR CLINIC OWNERS
+  ═══════════════════════════════════════════ -->
+  <section class="split-section split-reverse" id="clinics">
+    <div class="split-media" data-parallax="0.25">
+      <img
+        src="https://rx2600.com/wp-content/uploads/2024/04/RPT-OfficePortraits-2-scaled.jpg"
+        alt="RX2600 team supporting a clinic partner"
+        width="800" height="900"
+        loading="lazy"
+      />
+      <div class="media-overlay" aria-hidden="true"></div>
+    </div>
+    <div class="split-content">
+      <p class="section-index" data-reveal="up">04 / For Clinic Owners</p>
+      <h2 data-reveal="up" data-delay="100">Upgrade Your<br/>Practice. Grow Revenue.</h2>
+      <p class="body-text" data-reveal="up" data-delay="150">
+        Integrating RX2600 is not just adding a piece of equipment —
+        it is adding a premium revenue-generating treatment modality
+        that no other clinic in your market is offering.
+      </p>
+      <ul class="benefit-list" data-reveal="up" data-delay="200">
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00f5d4" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          New revenue stream — no additional staff headcount required
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00f5d4" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Differentiates your practice in a competitive market
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00f5d4" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Dedicated onboarding, clinical training, and ongoing support
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00f5d4" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Proven ROI tracked across 500+ clinic partner locations
+        </li>
+      </ul>
+      <a href="#contact" class="btn-primary" data-reveal="up" data-delay="300">Clinic Inquiry</a>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       CTA — FULL WIDTH
+  ═══════════════════════════════════════════ -->
+  <section class="cta-block" id="contact" aria-labelledby="cta-heading">
+    <div class="cta-bg" aria-hidden="true"></div>
+    <div class="cta-inner">
+      <p class="cta-eyebrow" data-reveal="up">[ Ready to Deploy ]</p>
+      <h2 class="cta-heading" id="cta-heading" data-reveal="up" data-delay="100">
+        Transform Your Clinic.<br/>Start Now.
+      </h2>
+      <p class="cta-body" data-reveal="up" data-delay="200">
+        Join 500+ clinic partners already delivering the future of physical therapy.
+      </p>
+      <div class="cta-actions" data-reveal="up" data-delay="300">
+        <a href="https://rx2600.com" target="_blank" rel="noopener noreferrer" class="btn-primary">
+          Request a Demo
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="tel:8556292805" class="btn-ghost">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.6 19a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 3.1 4.2 2 2 0 0 1 5.08 2h3a2 2 0 0 1 2 1.72c.12.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L9.09 9.91A16 16 0 0 0 15 15.91l1.27-1.27a2 2 0 0 1 2.11-.45c.9.35 1.85.6 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+          (855) 629-2805
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- ─── SECTION 01: THE SYSTEM ─── -->
-  <section class="full-section" id="product" data-section="1">
-    <div class="section-media" data-parallax="0.3">
-      <img 
-        src="https://rx2600.com/wp-content/uploads/2026/06/4.jpeg"
-        alt="RX2600 robotic therapy system in use"
-        loading="lazy"
-      />
-    </div>
-    <div class="section-content">
-      <p class="section-label">The System</p>
-      <h2>Built to<br/>Perform.</h2>
-      <p class="section-text">
-        RX2600 delivers consistent, repeatable robotic precision to
-        every treatment. Where manual therapy varies, the RX2600 does not.
-        Engineered for the demands of modern physical therapy clinics.
-      </p>
-      <a href="#technology" class="btn-primary">Learn More</a>
-    </div>
-  </section>
 
-  <!-- ─── FULL BLEED IMAGE ─── -->
-  <div class="full-bleed-image">
-    <img 
-      src="https://rx2600.com/wp-content/uploads/2025/02/Robots-and-2-therapists-scaled.jpg"
-      alt="RX2600 robotic therapy with two therapists in a clinic setting"
-      loading="lazy"
-    />
-  </div>
-
-  <!-- ─── SECTION 02: TECHNOLOGY ─── -->
-  <section class="full-section" id="technology" data-section="2">
-    <div class="section-media" data-parallax="0.3">
-      <img 
-        src="https://rx2600.com/wp-content/uploads/2024/04/robot-up-close-transparent.png"
-        alt="RX2600 close-up"
-        loading="lazy"
-      />
-    </div>
-    <div class="section-content">
-      <p class="section-label">Technology</p>
-      <h2>Precision<br/>by Design.</h2>
-      <p class="section-text">
-        Robotic consistency means every patient receives the same precise
-        therapeutic force — calibrated, repeatable, and clinically effective.
-      </p>
-      
-      <ul class="feature-list">
-        <li>
-          <p class="feature-number">01</p>
-          <p class="feature-name">Robotic Consistency</p>
-          <p class="feature-desc">Same precise therapeutic force delivered every session. No variation. No fatigue.</p>
-        </li>
-        <li>
-          <p class="feature-number">02</p>
-          <p class="feature-name">Non-Surgical</p>
-          <p class="feature-desc">Lengthens muscle tissue without incision, anesthesia, or recovery downtime.</p>
-        </li>
-        <li>
-          <p class="feature-number">03</p>
-          <p class="feature-name">Pain Relief</p>
-          <p class="feature-desc">Designed to reduce patient pain at the source through targeted tissue therapy.</p>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ─── SECTION 03: CLINICAL ─── -->
-  <section class="full-section reverse" id="clinical" data-section="3">
-    <div class="section-media" data-parallax="0.3">
-      <img 
-        src="https://rx2600.com/wp-content/uploads/2026/06/3.jpeg"
-        alt="Therapist operating the RX2600 robot in a clinic"
-        loading="lazy"
-      />
-    </div>
-    <div class="section-content">
-      <p class="section-label">Clinical Outcomes</p>
-      <h2>Real Results.<br/>Real Clinics.</h2>
-      <p class="section-text">
-        Physical therapists and clinic operators across the country are
-        using the RX2600 to deliver measurable improvements in patient
-        outcomes — and stronger clinic revenue.
-      </p>
-      <p class="section-text">
-        From pain management to mobility recovery, RX2600 becomes the
-        centerpiece of a modern, advanced-care practice.
-      </p>
-      <a href="#contact" class="btn-primary">See Clinic Results</a>
-    </div>
-  </section>
-
-  <!-- ─── SECTION 04: FOR CLINICS ─── -->
-  <section class="full-section" id="clinics" data-section="4">
-    <div class="section-media" data-parallax="0.3">
-      <img 
-        src="https://rx2600.com/wp-content/uploads/2024/04/RPT-OfficePortraits-2-scaled.jpg"
-        alt="RX2600 team"
-        loading="lazy"
-      />
-    </div>
-    <div class="section-content">
-      <p class="section-label">For Clinic Owners</p>
-      <h2>Grow Your<br/>Practice.</h2>
-      <p class="section-text">
-        Adding the RX2600 to your clinic is more than upgrading equipment.
-        It is adding a revenue-generating, patient-differentiating treatment
-        that other clinics in your market cannot match.
-      </p>
-      
-      <ul class="benefit-list">
-        <li>New revenue stream without adding staff headcount</li>
-        <li>Advanced treatment that differentiates your practice</li>
-        <li>Dedicated onboarding, training, and ongoing support</li>
-        <li>Proven revenue results across existing clinic partners</li>
-      </ul>
-      
-      <a href="#contact" class="btn-primary">New Clinic Inquiry</a>
-    </div>
-  </section>
-
-  <!-- ─── CTA SECTION ─── -->
-  <section class="cta-section" id="contact">
-    <h2>Ready to Transform<br/>Your Clinic?</h2>
-    <p>
-      Join clinics already using RX2600 to deliver better outcomes and
-      stronger patient satisfaction.
-    </p>
-    <div class="cta-buttons">
-      <a href="https://rx2600.com" target="_blank" rel="noopener noreferrer" class="btn-primary">Request a Demo</a>
-      <a href="tel:8556292805" class="btn-ghost">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.6 19a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 3.1 4.2 2 2 0 0 1 5.08 2h3a2 2 0 0 1 2 1.72c.12.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L9.09 9.91A16 16 0 0 0 15 15.91l1.27-1.27a2 2 0 0 1 2.11-.45c.9.35 1.85.6 2.81.72A2 2 0 0 1 22 16.92z"/>
-        </svg>
-        (855) 629-2805
-      </a>
-    </div>
-  </section>
-
-  <!-- ─── FOOTER ─── -->
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
   <footer class="site-footer">
     <div class="footer-inner">
-      <span class="footer-logo">RX2600</span>
-      <nav class="footer-links">
+      <div class="footer-brand">
+        <span class="footer-logo">RX2600</span>
+        <span class="footer-powered">Powered by RPT™</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
         <a href="https://rx2600.com" target="_blank" rel="noopener noreferrer">rx2600.com</a>
         <a href="tel:8556292805">(855) 629-2805</a>
       </nav>
-      <p class="footer-copy">© 2026 RX2600. Powered by RPT.</p>
+      <p class="footer-copy">© 2026 RX2600. All rights reserved.</p>
     </div>
   </footer>
+
 </Base>
 
 <style>
-  /* ─── HERO SECTION ─── */
-  .hero {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: flex-end;
-    overflow: hidden;
-    margin-top: 80px;
-  }
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding-top: 80px;
+}
 
-  .hero-background {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-  }
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: none;
+  will-change: transform;
+}
+.hero-robot-img {
+  width: min(55vw, 700px);
+  height: auto;
+  object-fit: contain;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 60px rgba(0,245,212,0.18)) drop-shadow(0 0 120px rgba(0,245,212,0.06));
+  animation: robot-float 6s ease-in-out infinite;
+}
+@keyframes robot-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-16px); }
+}
 
-  .hero-image {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.hero-glow {
+  position: absolute;
+  right: 0; top: 0;
+  width: 60%; height: 100%;
+  background: radial-gradient(ellipse at 70% 50%, rgba(0,245,212,0.06) 0%, transparent 65%);
+  z-index: 1; pointer-events: none;
+}
 
-  .hero-graphic {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.hero-grid {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0,245,212,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,212,0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, transparent 75%);
+}
 
-  .hero-content {
-    position: relative;
-    z-index: 10;
-    padding: 4rem 2rem 6rem;
-    max-width: 1400px;
-    margin: 0 auto;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
+.hero-scanline {
+  position: absolute; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0,245,212,0.15), transparent);
+  z-index: 2; pointer-events: none;
+  animation: scanline 6s linear infinite;
+}
+@keyframes scanline {
+  0%   { top: -2px; opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
 
-  .hero-text {
-    flex: 1;
-  }
+.hud-corner {
+  position: absolute; z-index: 3; pointer-events: none;
+  width: 40px; height: 40px;
+}
+.hud-tl { top: 96px; left: 24px; }
+.hud-br { bottom: 80px; right: 24px; }
+.hud-line { position: absolute; background: rgba(0,245,212,0.4); }
+.hud-line-h { width: 100%; height: 1px; top: 0; left: 0; }
+.hud-line-v { width: 1px; height: 100%; top: 0; left: 0; }
+.hud-br .hud-line-h { top: auto; bottom: 0; }
+.hud-br .hud-line-v { left: auto; right: 0; }
 
-  .hero-label {
-    font-size: 0.875rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 1rem;
-  }
+.hero-content {
+  position: relative; z-index: 10;
+  max-width: 1400px; margin: 0 auto; width: 100%;
+  padding: 0 2rem 5rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: flex-end;
+  gap: 3rem;
+}
 
-  .hero-title {
-    font-size: clamp(2rem, 8vw, 5rem);
-    font-weight: 700;
-    line-height: 1.1;
-    color: #ffffff;
-    margin: 0;
-  }
+.hero-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+  color: #00f5d4; margin-bottom: 1.5rem;
+}
+.eyebrow-bracket { opacity: 0.5; }
 
-  .scroll-indicator {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    animation: bounce 2s infinite;
-  }
+.hero-title {
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 700; line-height: 1.0;
+  color: #fff;
+  margin-bottom: 1.75rem;
+  position: relative;
+  white-space: pre-line;
+}
 
-  .scroll-indicator span {
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.6);
-  }
+.hero-subtitle {
+  font-size: clamp(1rem, 1.5vw, 1.1rem);
+  line-height: 1.8;
+  color: rgba(232,232,240,0.65);
+  max-width: 480px;
+  margin-bottom: 2.5rem;
+}
 
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(12px); }
-  }
+.hero-cta {
+  display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
+}
 
-  /* ─── CONTENT SECTIONS ─── */
-  .content-section {
-    background: #0a0a0a;
-    padding: 6rem 2rem;
-    position: relative;
-    z-index: 100;
-  }
+.hero-status {
+  background: rgba(5,5,8,0.7);
+  border: 1px solid rgba(0,245,212,0.15);
+  border-radius: 4px;
+  padding: 1.5rem;
+  backdrop-filter: blur(12px);
+  min-width: 240px;
+  align-self: flex-end;
+}
+.status-header {
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(0,245,212,0.1);
+}
+.status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #00f5d4;
+  box-shadow: 0 0 8px #00f5d4;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px #00f5d4; }
+  50% { opacity: 0.5; box-shadow: 0 0 16px #00f5d4; }
+}
+.status-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 2px;
+  color: #00f5d4;
+}
+.status-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+.status-list li {
+  display: flex; justify-content: space-between;
+  font-size: 0.72rem; gap: 1rem;
+}
+.status-key {
+  font-family: 'Space Mono', monospace;
+  color: rgba(232,232,240,0.4);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.status-val {
+  color: rgba(232,232,240,0.9);
+  font-weight: 500; text-align: right;
+}
 
-  .section-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-  }
+.scroll-cue {
+  position: absolute; bottom: 2rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+  z-index: 10;
+}
+.scroll-line {
+  width: 1px; height: 50px;
+  background: linear-gradient(to bottom, rgba(0,245,212,0.8), transparent);
+  animation: scroll-drop 1.8s ease-in-out infinite;
+}
+@keyframes scroll-drop {
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+.scroll-cue span {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 3px;
+  color: rgba(0,245,212,0.5);
+}
 
-  .section-image-top {
-    width: 100%;
-    height: 400px;
-    border-radius: 16px;
-    overflow: hidden;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-  }
 
-  .placeholder-image {
-    width: 100%;
-    height: 100%;
-  }
+/* ═══════════════════════════════════════════
+   STATS TICKER
+═══════════════════════════════════════════ */
+.stats-ticker {
+  background: rgba(0,245,212,0.04);
+  border-top: 1px solid rgba(0,245,212,0.1);
+  border-bottom: 1px solid rgba(0,245,212,0.1);
+  padding: 2.5rem 2rem;
+  overflow: hidden;
+}
+.ticker-track {
+  max-width: 1400px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-around;
+  flex-wrap: wrap; gap: 2rem;
+}
+.ticker-item {
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  text-align: center;
+}
+.ticker-num {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700; color: #00f5d4;
+  line-height: 1;
+}
+.ticker-label {
+  font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(232,232,240,0.45);
+}
+.ticker-divider {
+  font-family: 'Space Mono', monospace;
+  font-size: 1rem; color: rgba(0,245,212,0.25);
+  letter-spacing: 2px;
+}
 
-  .section-code {
-    font-size: 0.875rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #ff6b5b;
-    margin-bottom: 1rem;
-  }
 
-  .section-heading {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
-    color: #ffffff;
-  }
+/* ═══════════════════════════════════════════
+   SPLIT SECTIONS
+═══════════════════════════════════════════ */
+.split-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 90vh;
+  position: relative;
+  overflow: hidden;
+}
+.split-section.split-reverse { direction: rtl; }
+.split-section.split-reverse > * { direction: ltr; }
 
-  .section-description {
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #cccccc;
-    margin-bottom: 2rem;
-  }
+.split-media {
+  position: relative; overflow: hidden;
+  will-change: transform;
+}
+.split-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transform-origin: center;
+}
+.media-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(5,5,8,0.5), transparent 60%);
+  z-index: 1;
+}
+.split-section.split-reverse .media-overlay {
+  background: linear-gradient(to left, rgba(5,5,8,0.5), transparent 60%);
+}
 
-  .cta-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: #ff6b5b;
-    text-decoration: none;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-size: 0.875rem;
-    transition: gap 0.3s;
-  }
+.split-content {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(3rem, 6vw, 6rem);
+  background: #050508;
+  position: relative; z-index: 2;
+}
+.split-content::before {
+  content: '';
+  position: absolute; left: 0; top: 10%; bottom: 10%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(0,245,212,0.15), transparent);
+}
+.split-section.split-reverse .split-content::before { left: auto; right: 0; }
 
-  .cta-link:hover {
-    gap: 1.25rem;
-  }
+.section-index {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+  color: #00f5d4; margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
 
-  .cta-link svg {
-    transition: transform 0.3s;
-  }
+.split-content h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700; line-height: 1.1;
+  color: #fff; margin-bottom: 1.5rem;
+}
 
-  .cta-link:hover svg {
-    transform: translateX(4px);
-  }
+.body-text {
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  line-height: 1.85;
+  color: rgba(232,232,240,0.65);
+  max-width: 520px;
+  margin-bottom: 1.25rem;
+}
 
-  /* ─── STORY SECTION ─── */
-  .story-section {
-    background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
-    padding: 8rem 2rem;
-    position: relative;
-    z-index: 101;
-  }
+.feature-grid {
+  list-style: none;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+.feature-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 4px;
+  padding: 1.25rem;
+  transition: border-color 0.3s, background 0.3s;
+}
+.feature-card:hover {
+  border-color: rgba(0,245,212,0.2);
+  background: rgba(0,245,212,0.04);
+}
+.feature-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem; color: #00f5d4; margin-bottom: 0.5rem;
+}
+.feature-title {
+  font-size: 0.85rem; font-weight: 600; color: #fff; margin-bottom: 0.4rem;
+}
+.feature-body {
+  font-size: 0.78rem; line-height: 1.6;
+  color: rgba(232,232,240,0.5);
+}
 
-  .story-container {
-    max-width: 900px;
-    margin: 0 auto;
-  }
+.benefit-list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 0.85rem;
+  margin: 1.5rem 0 2rem;
+}
+.benefit-list li {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  font-size: 0.92rem;
+  color: rgba(232,232,240,0.75);
+}
+.benefit-list svg { flex-shrink: 0; margin-top: 2px; }
 
-  .story-decoration {
-    font-size: 3rem;
-    color: #ff6b5b;
-    margin-bottom: 2rem;
-    opacity: 0.6;
-  }
 
-  .story-title {
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 2rem;
-    color: #ffffff;
-  }
+/* ═══════════════════════════════════════════
+   CINEMATIC BLOCK
+═══════════════════════════════════════════ */
+.cinematic-block {
+  position: relative; overflow: hidden;
+  height: clamp(320px, 40vw, 600px);
+}
+.cinematic-inner {
+  width: 100%; height: 120%;
+  margin-top: -10%;
+  will-change: transform;
+}
+.cinematic-inner img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.55) saturate(0.8);
+}
+.cinematic-caption {
+  position: absolute; bottom: 2rem; right: 2rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(232,232,240,0.4);
+}
+.cinematic-caption span { color: #00f5d4; }
 
-  .story-text {
-    font-size: 1.1rem;
-    line-height: 1.9;
-    color: #bbbbbb;
-    margin-bottom: 2rem;
-    text-align: justify;
-  }
 
-  /* ─── FEATURED SECTION ─── */
-  .featured-section {
-    background: #0a0a0a;
-    padding: 6rem 2rem;
-    position: relative;
-    z-index: 102;
-  }
+/* ═══════════════════════════════════════════
+   CTA BLOCK
+═══════════════════════════════════════════ */
+.cta-block {
+  position: relative;
+  padding: clamp(6rem, 12vw, 10rem) 2rem;
+  text-align: center;
+  overflow: hidden;
+}
+.cta-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(0,245,212,0.08) 0%, transparent 60%),
+    linear-gradient(to bottom, #050508, #080810, #050508);
+  z-index: 0;
+}
+.cta-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,245,212,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,212,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.cta-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+.cta-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+  color: #00f5d4; margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
+.cta-heading {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700; line-height: 1.1;
+  color: #fff; margin-bottom: 1.5rem;
+}
+.cta-body {
+  font-size: 1.05rem; line-height: 1.8;
+  color: rgba(232,232,240,0.6);
+  margin-bottom: 3rem;
+}
+.cta-actions { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
 
-  .featured-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-  }
 
-  .featured-image {
-    width: 100%;
-    height: 500px;
-    border-radius: 16px;
-    overflow: hidden;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    order: 2;
-  }
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+.site-footer {
+  background: #030305;
+  border-top: 1px solid rgba(0,245,212,0.07);
+  padding: 3rem 2rem;
+}
+.footer-inner {
+  max-width: 1400px; margin: 0 auto;
+  display: flex; flex-wrap: wrap;
+  align-items: center; justify-content: space-between;
+  gap: 1.5rem;
+}
+.footer-brand { display: flex; flex-direction: column; gap: 0.25rem; }
+.footer-logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.1rem; font-weight: 700; letter-spacing: 3px; color: #00f5d4;
+}
+.footer-powered {
+  font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(232,232,240,0.3);
+}
+.footer-links { display: flex; gap: 2rem; }
+.footer-links a {
+  font-size: 0.8rem; letter-spacing: 1px;
+  color: rgba(232,232,240,0.45);
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: #00f5d4; }
+.footer-copy {
+  font-size: 0.72rem;
+  color: rgba(232,232,240,0.25);
+}
 
-  .featured-content {
-    order: 1;
-  }
 
-  .featured-label {
-    font-size: 0.875rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #ff6b5b;
-    margin-bottom: 1rem;
-  }
-
-  .featured-title {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
-    color: #ffffff;
-  }
-
-  .featured-description {
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #cccccc;
-    margin-bottom: 2rem;
-  }
-
-  .featured-cta {
-    margin-top: 2rem;
-  }
-
-  /* ─── FOOTER ─── */
-  .site-footer {
-    background: #000000;
-    padding: 4rem 2rem;
-    text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    position: relative;
-    z-index: 103;
-  }
-
-  .footer-content {
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  .footer-content p {
-    font-size: 0.875rem;
-    color: #888888;
-    margin: 0.5rem 0;
-  }
-
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 768px) {
-    .hero-content {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 2rem;
-    }
-
-    .scroll-indicator {
-      align-self: center;
-      margin-top: 2rem;
-    }
-
-    .section-container,
-    .featured-container {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    .featured-image {
-      order: 1;
-      height: 300px;
-    }
-
-    .featured-content {
-      order: 2;
-    }
-
-    .story-text {
-      text-align: left;
-    }
-
-    .content-section,
-    .story-section,
-    .featured-section {
-      padding: 3rem 1rem;
-    }
-  }
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .hero-content { grid-template-columns: 1fr; }
+  .hero-status { display: none; }
+  .hero-robot-img { width: 70vw; opacity: 0.25; position: absolute; right: -5%; bottom: 0; }
+}
+@media (max-width: 768px) {
+  .split-section { grid-template-columns: 1fr; min-height: auto; }
+  .split-section.split-reverse { direction: ltr; }
+  .split-media { height: 55vw; max-height: 400px; }
+  .split-content { padding: 2.5rem 1.5rem; }
+  .split-content::before { display: none; }
+  .feature-grid { grid-template-columns: 1fr; }
+  .hero-content { padding: 0 1.5rem 4rem; }
+  .cta-block { padding: 5rem 1.5rem; }
+  .ticker-divider { display: none; }
+  .ticker-track { gap: 1.5rem; }
+  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-links { justify-content: center; }
+}
 </style>
