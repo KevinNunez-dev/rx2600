@@ -58,9 +58,9 @@ import Base from '../layouts/Base.astro';
 
 <!-- ══ PANEL 1: THE SYSTEM ══ -->
 <section class="panel split-panel" data-panel="1" id="product">
-  <div class="sp-media" aria-hidden="true">
+  <div class="sp-media">
     <img src="https://rx2600.com/wp-content/uploads/2026/06/4.jpeg" alt="RX2600 robotic arm in a therapy session" width="800" height="900" loading="lazy"/>
-    <div class="sp-media-overlay"></div>
+    <div class="sp-media-overlay" aria-hidden="true"></div>
   </div>
   <div class="sp-content">
     <p class="section-index" data-reveal="up" data-delay="0">01 / The System</p>
@@ -78,9 +78,9 @@ import Base from '../layouts/Base.astro';
 
 <!-- ══ PANEL 2: TECHNOLOGY ══ -->
 <section class="panel split-panel split-panel-reverse" data-panel="2" id="technology">
-  <div class="sp-media" aria-hidden="true">
-    <img src="https://rx2600.com/wp-content/uploads/2024/04/robot-up-close-transparent.png" alt="RX2600 robotic arm close-up" width="800" height="900" loading="lazy" style="object-fit:contain;padding:2rem;"/>
-    <div class="sp-media-overlay sp-media-overlay-right"></div>
+  <div class="sp-media">
+    <img src="https://rx2600.com/wp-content/uploads/2024/04/robot-up-close-transparent.png" alt="RX2600 robotic arm close-up" width="800" height="900" loading="lazy" class="img-contain"/>
+    <div class="sp-media-overlay sp-media-overlay-right" aria-hidden="true"></div>
   </div>
   <div class="sp-content">
     <p class="section-index" data-reveal="up" data-delay="0">02 / Technology</p>
@@ -116,9 +116,9 @@ import Base from '../layouts/Base.astro';
 
 <!-- ══ PANEL 3: CLINICAL ══ -->
 <section class="panel split-panel" data-panel="3" id="clinical">
-  <div class="sp-media" aria-hidden="true">
+  <div class="sp-media">
     <img src="https://rx2600.com/wp-content/uploads/2026/06/3.jpeg" alt="Physical therapist operating the RX2600 on a patient" width="800" height="900" loading="lazy"/>
-    <div class="sp-media-overlay"></div>
+    <div class="sp-media-overlay" aria-hidden="true"></div>
   </div>
   <div class="sp-content">
     <p class="section-index" data-reveal="up" data-delay="0">03 / Clinical Outcomes</p>
@@ -150,9 +150,9 @@ import Base from '../layouts/Base.astro';
 
 <!-- ══ PANEL 4: CLINIC OWNERS ══ -->
 <section class="panel split-panel split-panel-reverse" data-panel="4" id="clinics">
-  <div class="sp-media" aria-hidden="true">
+  <div class="sp-media">
     <img src="https://rx2600.com/wp-content/uploads/2025/02/Robots-and-2-therapists-scaled.jpg" alt="RX2600 with two therapists in a modern clinic" width="800" height="900" loading="lazy"/>
-    <div class="sp-media-overlay sp-media-overlay-right"></div>
+    <div class="sp-media-overlay sp-media-overlay-right" aria-hidden="true"></div>
   </div>
   <div class="sp-content">
     <p class="section-index" data-reveal="up" data-delay="0">04 / For Clinic Owners</p>
@@ -208,7 +208,7 @@ import Base from '../layouts/Base.astro';
   position: relative;
 }
 
-/* Mobile: panels are normal block sections */
+/* Mobile: panels are normal block sections — JS engine is disabled on mobile */
 @media (max-width: 768px) {
   .panel {
     position: static !important;
@@ -216,7 +216,7 @@ import Base from '../layouts/Base.astro';
     opacity: 1 !important;
     width: 100% !important;
     height: auto !important;
-    min-height: 100svh;
+    min-height: unset;
     overflow: visible;
   }
 }
@@ -325,11 +325,23 @@ import Base from '../layouts/Base.astro';
 .split-panel-reverse { direction:rtl; }
 .split-panel-reverse > * { direction:ltr; }
 
+/* Media pane fills its grid cell height */
 .sp-media {
-  position:relative; overflow:hidden;
-  min-height: 100%;
+  position:relative;
+  overflow:hidden;
+  /* Let it stretch to full grid row height on desktop */
 }
-.sp-media img { width:100%; height:100%; object-fit:cover; }
+.sp-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.img-contain {
+  object-fit: contain !important;
+  padding: 2rem;
+}
 .sp-media-overlay {
   position:absolute; inset:0;
   background:linear-gradient(to right,rgba(0,0,0,.55),transparent 60%);
@@ -402,7 +414,6 @@ import Base from '../layouts/Base.astro';
   background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
   background-size:60px 60px;
 }
-/* Subtle fuschia glow at center of CTA */
 .cta-grid::after {
   content:'';
   position:absolute; inset:0;
@@ -433,34 +444,62 @@ import Base from '../layouts/Base.astro';
 @media (max-width:1024px) {
   .hero-content { grid-template-columns:1fr; }
   .hero-status { display:none; }
-  .hero-robot-img { width:70vw; opacity:.1; position:absolute; right:-5%; bottom:0; }
+  .hero-robot-img { width:70vw; opacity:.35; position:absolute; right:-5%; bottom:0; }
 }
 @media (max-width:768px) {
-  /* Full normal vertical scroll on mobile */
+  /* Stack split panels vertically on mobile */
   .split-panel {
-    grid-template-columns:1fr;
-    min-height: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: 280px auto;
+    min-height: unset;
     height: auto;
   }
-  .split-panel-reverse { direction:ltr; }
-  .sp-media { height:60vw; max-height:300px; min-height:unset; }
-  .sp-media img { object-position: center top; }
-  .sp-content { padding:2.5rem 1.25rem 3rem; }
-  .sp-content::before { display:none; }
-  .sp-content h2 { font-size:clamp(1.75rem,7vw,2.5rem); }
-  .feature-grid { grid-template-columns:1fr; gap:.75rem; }
-  .hero-content { padding:0 1.25rem 3rem; grid-template-columns:1fr; }
-  .hero-title { font-size:clamp(2.5rem,10vw,4rem); }
-  .hero-subtitle { font-size:.95rem; }
-  .hero-cta { flex-direction:column; align-items:flex-start; }
-  .btn-primary, .btn-ghost { width:100%; justify-content:center; padding:.9rem 1.5rem; }
-  .stats-row { gap:1.5rem; }
-  .cta-panel { min-height:100svh; padding:0; }
-  .cta-inner { padding:3rem 1.5rem; }
-  .cta-heading { font-size:clamp(2rem,8vw,3rem); }
-  .cta-actions { flex-direction:column; }
-  .benefit-list li { font-size:.85rem; }
-  .scroll-cue { display:none; }
-  .hud-corner { display:none; }
+  .split-panel-reverse { direction: ltr; }
+
+  /* Image pane: fixed height, relative positioning so absolute img fills it */
+  .sp-media {
+    position: relative;
+    height: 280px;
+    width: 100%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  /* img is position:absolute inside — already fills 100% width/height */
+  .sp-media-overlay { display: block; }
+
+  .sp-content { padding: 2.5rem 1.25rem 3rem; }
+  .sp-content::before { display: none; }
+  .sp-content h2 { font-size: clamp(1.75rem, 7vw, 2.5rem); }
+  .feature-grid { grid-template-columns: 1fr; gap: .75rem; }
+  .hero-content { padding: 0 1.25rem 3rem; grid-template-columns: 1fr; }
+  .hero-title { font-size: clamp(2.5rem, 10vw, 4rem); }
+  .hero-subtitle { font-size: .95rem; }
+  .hero-cta { flex-direction: column; align-items: flex-start; }
+  .btn-primary, .btn-ghost { width: 100%; justify-content: center; padding: .9rem 1.5rem; }
+  .stats-row { gap: 1.5rem; }
+  .cta-panel { min-height: 100svh; padding: 0; }
+  .cta-inner { padding: 3rem 1.5rem; }
+  .cta-heading { font-size: clamp(2rem, 8vw, 3rem); }
+  .cta-actions { flex-direction: column; }
+  .benefit-list li { font-size: .85rem; }
+  .scroll-cue { display: none; }
+  .hud-corner { display: none; }
+  /* Hero robot more visible on mobile */
+  .hero-robot-img { width: 80vw; opacity: .35; right: -10%; bottom: 10%; }
 }
 </style>
+
+<script is:inline>
+  // Guard: disable custom scroll engine on mobile (<=768px)
+  // On mobile, panels are normal block elements with natural scroll
+  (function() {
+    if (window.innerWidth <= 768) {
+      // On mobile: just trigger reveals for all panels immediately
+      document.querySelectorAll('[data-reveal]').forEach(function(el) {
+        var delay = parseInt(el.dataset.delay || 0);
+        setTimeout(function() { el.classList.add('revealed'); }, delay + 100);
+      });
+      return; // skip the scroll engine entirely
+    }
+  })();
+</script>
