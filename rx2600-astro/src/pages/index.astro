@@ -21,7 +21,7 @@ import Base from '../layouts/Base.astro';
   <div class="hero-content">
     <div class="hero-left">
       <p class="hero-eyebrow" data-reveal="up"><span class="eyebrow-bracket">[</span> System Designation RX-2600 <span class="eyebrow-bracket">]</span></p>
-      <h1 class="hero-title" data-text="The Future of Therapy Is Here." data-reveal="up" data-delay="100">
+      <h1 class="hero-title scroll-headline" data-text="The Future of Therapy Is Here." data-reveal="up" data-delay="100">
         The Future<br/>of Therapy<br/>Is Here.
       </h1>
       <p class="hero-subtitle" data-reveal="up" data-delay="200">
@@ -62,7 +62,7 @@ import Base from '../layouts/Base.astro';
   </div>
   <div class="sp-content">
     <p class="section-index" data-reveal="up">01 / The System</p>
-    <h2 data-reveal="up" data-delay="100">Built for Precision.<br/>Built to Perform.</h2>
+    <h2 class="scroll-headline" data-reveal="up" data-delay="100">Built for Precision.<br/>Built to Perform.</h2>
     <p class="body-text" data-reveal="up" data-delay="200">
       The RX2600 is not a massage chair. It is a medical-grade robotic therapy platform — engineered with the same precision standards as surgical robotics, without a single incision.
     </p>
@@ -82,7 +82,7 @@ import Base from '../layouts/Base.astro';
   </div>
   <div class="sp-content">
     <p class="section-index" data-reveal="up">02 / Technology</p>
-    <h2 data-reveal="up" data-delay="100">Precision<br/>by Design.</h2>
+    <h2 class="scroll-headline" data-reveal="up" data-delay="100">Precision<br/>by Design.</h2>
     <p class="body-text" data-reveal="up" data-delay="150">
       Where a human therapist introduces variable force, fatigue, and inconsistency — the RX2600 does not. Every stroke is identical to the last. Every session is clinically repeatable.
     </p>
@@ -120,7 +120,7 @@ import Base from '../layouts/Base.astro';
   </div>
   <div class="sp-content">
     <p class="section-index" data-reveal="up">03 / Clinical Outcomes</p>
-    <h2 data-reveal="up" data-delay="100">Real Results.<br/>Nationwide.</h2>
+    <h2 class="scroll-headline" data-reveal="up" data-delay="100">Real Results.<br/>Nationwide.</h2>
     <p class="body-text" data-reveal="up" data-delay="150">
       Across a nationwide network of physical therapy and sports medicine clinics, the RX2600 has become the go-to advanced therapy platform — delivering outcomes that manual techniques simply cannot replicate.
     </p>
@@ -154,7 +154,7 @@ import Base from '../layouts/Base.astro';
   </div>
   <div class="sp-content">
     <p class="section-index" data-reveal="up">04 / For Clinic Owners</p>
-    <h2 data-reveal="up" data-delay="100">This Is the<br/>Future of Your Clinic.</h2>
+    <h2 class="scroll-headline" data-reveal="up" data-delay="100">This Is the<br/>Future of Your Clinic.</h2>
     <p class="body-text" data-reveal="up" data-delay="150">
       Imagine offering a treatment that no other clinic in your market has. The RX2600 is not just equipment — it is a competitive weapon that commands premium pricing, generates passive revenue, and keeps patients coming back.
     </p>
@@ -174,7 +174,7 @@ import Base from '../layouts/Base.astro';
   <div class="cta-grid" aria-hidden="true"></div>
   <div class="cta-inner">
     <p class="cta-eyebrow" data-reveal="up">[ Ready to Deploy ]</p>
-    <h2 class="cta-heading" data-reveal="up" data-delay="100">Transform Your Clinic.<br/>Start Now.</h2>
+    <h2 class="cta-heading scroll-headline" data-reveal="up" data-delay="100">Transform Your Clinic.<br/>Start Now.</h2>
     <p class="cta-body" data-reveal="up" data-delay="200">
       Join a nationwide network of forward-thinking clinics already delivering the future of physical therapy — backed by 15+ years of R&amp;D and FDA registered.
     </p>
@@ -200,8 +200,11 @@ import Base from '../layouts/Base.astro';
 <style>
 /* ══ PANEL BASE ══ */
 .panel {
+  /* Each panel fills at least the full viewport — gives scroll effects room to breathe */
+  min-height: 100dvh;
   background: #000;
   overflow: hidden;
+  position: relative;
 }
 
 /* ══ HERO ══ */
@@ -210,6 +213,8 @@ import Base from '../layouts/Base.astro';
   flex-direction: column;
   justify-content: flex-end;
   padding-top: 80px;
+  /* Hero is exactly one viewport tall — intentional full-screen first impression */
+  height: 100dvh;
 }
 .hero-bg {
   position: absolute; inset:0; z-index:0;
@@ -298,12 +303,18 @@ import Base from '../layouts/Base.astro';
 .split-panel {
   display:grid;
   grid-template-columns:1fr 1fr;
+  /* Tall enough to fill the screen — content centers vertically inside */
+  min-height: 100dvh;
   position:relative;
 }
 .split-panel-reverse { direction:rtl; }
 .split-panel-reverse > * { direction:ltr; }
 
-.sp-media { position:relative; overflow:hidden; }
+.sp-media {
+  position:relative; overflow:hidden;
+  /* Image side fills full panel height */
+  min-height: 100%;
+}
 .sp-media img { width:100%; height:100%; object-fit:cover; }
 .sp-media-overlay {
   position:absolute; inset:0;
@@ -316,7 +327,8 @@ import Base from '../layouts/Base.astro';
 
 .sp-content {
   display:flex; flex-direction:column; justify-content:center;
-  padding:clamp(3rem,6vw,6rem);
+  /* Generous vertical padding — content breathes inside the tall panel */
+  padding:clamp(4rem,7vw,7rem) clamp(3rem,6vw,6rem);
   background:#000;
   position:relative; z-index:2;
 }
@@ -369,6 +381,7 @@ import Base from '../layouts/Base.astro';
 .cta-panel {
   display:flex; flex-direction:column;
   align-items:center; justify-content:center;
+  min-height:100dvh;
   position:relative;
 }
 .cta-grid {
@@ -376,7 +389,7 @@ import Base from '../layouts/Base.astro';
   background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
   background-size:60px 60px;
 }
-.cta-inner { position:relative; z-index:1; max-width:680px; margin:0 auto; text-align:center; padding:2rem; }
+.cta-inner { position:relative; z-index:1; max-width:680px; margin:0 auto; text-align:center; padding:4rem 2rem; }
 .cta-eyebrow { font-family:'Space Mono',monospace; font-size:.68rem; letter-spacing:3px; text-transform:uppercase; color:rgba(232,232,240,.22); margin-bottom:1.5rem; }
 .cta-heading { font-size:clamp(2.5rem,6vw,4.5rem); font-weight:700; line-height:1.1; color:#fff; margin-bottom:1.5rem; }
 .cta-body { font-size:1rem; line-height:1.8; color:rgba(232,232,240,.38); margin-bottom:3rem; }
@@ -403,13 +416,14 @@ import Base from '../layouts/Base.astro';
   .hero-robot-img { width:70vw; opacity:.1; position:absolute; right:-5%; bottom:0; }
 }
 @media (max-width:768px) {
-  .split-panel { grid-template-columns:1fr; }
+  .split-panel { grid-template-columns:1fr; min-height:auto; }
   .split-panel-reverse { direction:ltr; }
-  .sp-media { height:45vw; max-height:280px; }
-  .sp-content { padding:2rem 1.5rem; }
+  .sp-media { height:55vw; max-height:320px; min-height:unset; }
+  .sp-content { padding:2.5rem 1.5rem; }
   .sp-content::before { display:none; }
   .feature-grid { grid-template-columns:1fr; }
   .hero-content { padding:0 1.5rem 3.5rem; }
   .stats-row { gap:1.2rem; }
+  .cta-panel { min-height:auto; padding:4rem 0; }
 }
 </style>
