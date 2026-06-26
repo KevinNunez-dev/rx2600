@@ -39,7 +39,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, ''); // e.g. "/rx2600"
       <nav class="navbar">
         <div class="nav-container">
           <a href={`${base}/`} class="logo" aria-label="RX2600 Home">
-            <svg width="30" height="30" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 36 36" fill="none" aria-hidden="true">
               <rect x="1" y="1" width="34" height="34" rx="4" stroke="url(#lg)" stroke-width="1.5"/>
               <path d="M8 10h8c3.3 0 6 2.7 6 6s-2.7 6-6 6H8V10z" stroke="url(#lg)" stroke-width="1.5" fill="none"/>
               <path d="M16 22l6 6" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round"/>
@@ -171,8 +171,25 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, ''); // e.g. "/rx2600"
       return;
     }
 
+    // ── Non-panel pages (e.g. /clinics/) ──
+    // If no panel sections exist, collapse the nav into pill on scroll
     const panels = Array.from(document.querySelectorAll('[data-panel]'));
-    if (!panels.length) return;
+    const navOuter = document.getElementById('nav-outer');
+
+    if (!panels.length) {
+      // Collapse nav to pill as soon as user scrolls down any amount
+      function handleClinicScroll() {
+        if (!navOuter) return;
+        if (window.scrollY > 20) {
+          navOuter.classList.add('nav-collapsed');
+        } else {
+          navOuter.classList.remove('nav-collapsed');
+        }
+      }
+      window.addEventListener('scroll', handleClinicScroll, { passive: true });
+      handleClinicScroll(); // run once on load in case already scrolled
+      return;
+    }
 
     const LERP      = 0.022;
     const COOLDOWN  = 1400;
@@ -211,7 +228,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, ''); // e.g. "/rx2600"
       dotsNav.querySelectorAll('.sdot').forEach((d, i) => d.classList.toggle('sdot-active', i === idx));
     }
 
-    const navOuter = document.getElementById('nav-outer');
     function updateNav(idx) {
       if (!navOuter) return;
       idx > 0 ? navOuter.classList.add('nav-collapsed') : navOuter.classList.remove('nav-collapsed');
@@ -387,7 +403,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, ''); // e.g. "/rx2600"
     transition: background .5s cubic-bezier(.16,1,.3,1), border-color .5s, box-shadow .5s, border-radius .5s;
   }
   .nav-outer.nav-collapsed {
-    left:50%; right:auto; width:min(900px,94vw);
+    left:50%; right:auto; width:min(860px,94vw);
     transform:translateX(-50%); padding:0; top:12px;
   }
   .nav-outer.nav-collapsed .header {
@@ -398,28 +414,35 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, ''); // e.g. "/rx2600"
     box-shadow: 0 4px 32px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.05);
   }
   .navbar { padding:0; }
-  .nav-container { max-width:100%; margin:0; padding:.75rem 1.5rem; display:flex; justify-content:space-between; align-items:center; }
-  .nav-outer:not(.nav-collapsed) .nav-container { padding:.75rem .5rem; }
-  .logo { display:flex; align-items:center; gap:.65rem; font-family:'Space Mono',monospace; font-size:.95rem; font-weight:700; letter-spacing:3px; color:#e8e8f0; transition:opacity .2s; }
+  .nav-container { max-width:100%; margin:0; padding:.65rem 1.5rem; display:flex; justify-content:space-between; align-items:center; }
+  .nav-outer:not(.nav-collapsed) .nav-container { padding:.65rem .5rem; }
+
+  /* Logo — smaller, tighter */
+  .logo { display:flex; align-items:center; gap:.5rem; font-family:'Space Mono',monospace; font-size:.72rem; font-weight:700; letter-spacing:3px; color:#e8e8f0; transition:opacity .2s; }
   .logo span { color:#e8e8f0; }
   .logo:hover { opacity:.7; }
-  .nav-links { display:flex; list-style:none; align-items:center; gap:2rem; }
-  .nav-link { font-size:.75rem; letter-spacing:1.5px; text-transform:uppercase; color:rgba(232,232,240,.5); position:relative; padding-bottom:2px; transition:color .25s; }
+
+  /* Nav links */
+  .nav-links { display:flex; list-style:none; align-items:center; gap:1.75rem; }
+  .nav-link { font-size:.65rem; letter-spacing:1.5px; text-transform:uppercase; color:rgba(232,232,240,.5); position:relative; padding-bottom:2px; transition:color .25s; white-space:nowrap; }
   .nav-link::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1px; background:rgba(232,232,240,.4); transition:width .3s; }
   .nav-link:hover { color:#e8e8f0; }
   .nav-link:hover::after { width:100%; }
   .nav-link--clinics { color: rgba(196,24,122,.75); }
   .nav-link--clinics:hover { color: rgba(196,24,122,1); }
   .nav-link--clinics::after { background: rgba(196,24,122,.6); }
-  .nav-cta { font-size:.7rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:600; padding:.45rem 1.2rem; border:1px solid rgba(196,24,122,.5); color:#e8e8f0; border-radius:50px; transition:background .3s, border-color .3s, box-shadow .3s; }
+
+  /* CTA button */
+  .nav-cta { font-size:.62rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:600; padding:.38rem 1rem; border:1px solid rgba(196,24,122,.5); color:#e8e8f0; border-radius:50px; transition:background .3s, border-color .3s, box-shadow .3s; white-space:nowrap; }
   .nav-cta:hover { background:rgba(196,24,122,.18); border-color:#c4187a; box-shadow:0 0 16px rgba(196,24,122,.2); }
+
   .hamburger { display:none; flex-direction:column; gap:5px; padding:8px; }
   .hamburger span { display:block; width:22px; height:1px; background:rgba(232,232,240,.7); transition:transform .3s, opacity .3s; transform-origin:center; }
   .hamburger.open span:first-child { transform:translateY(6px) rotate(45deg); }
   .hamburger.open span:last-child { transform:translateY(-6px) rotate(-45deg); }
   .mobile-menu { display:none; margin-top:8px; background:rgba(0,0,0,.97); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,.06); border-radius:20px; overflow:hidden; padding:.5rem 1.5rem 1.5rem; }
   .mobile-menu.open { display:block; }
-  .mobile-link { display:block; padding:.85rem 0; font-size:1rem; letter-spacing:2px; text-transform:uppercase; color:rgba(232,232,240,.55); border-bottom:1px solid rgba(255,255,255,.04); transition:color .25s; }
+  .mobile-link { display:block; padding:.85rem 0; font-size:.9rem; letter-spacing:2px; text-transform:uppercase; color:rgba(232,232,240,.55); border-bottom:1px solid rgba(255,255,255,.04); transition:color .25s; }
   .mobile-link:hover { color:#e8e8f0; }
   @media (max-width:768px) {
     .nav-links { display:none; }
