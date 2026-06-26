@@ -4,7 +4,7 @@ export interface Props {
   description?: string;
 }
 const {
-  title = 'RX2600 — Robotic Therapy System',
+  title = 'RX2600 — The Future of Therapy',
   description = 'The RX2600 is a next-generation robotic therapy system delivering non-surgical precision treatment for pain relief and mobility restoration.'
 } = Astro.props;
 ---
@@ -24,32 +24,26 @@ const {
 </head>
 <body>
 
-  <!-- Custom Cursor -->
   <div id="cursor" aria-hidden="true">
     <div id="cursor-dot"></div>
     <div id="cursor-ring"></div>
   </div>
 
-  <!-- Noise Overlay -->
   <div id="noise" aria-hidden="true"></div>
 
-  <!--
-    NAV — Full-width expanded state on load.
-    Items float at edges of the screen (logo far left, links far right).
-    On scroll >50px: collapses into a centered pill container.
-  -->
+  <!-- NAV -->
   <div class="nav-outer" id="nav-outer">
     <header class="header" id="header">
       <nav class="navbar">
         <div class="nav-container">
-          <a href="#hero" class="logo" aria-label="RX2600 Home">
-            <svg width="32" height="32" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-              <rect x="1" y="1" width="34" height="34" rx="4" stroke="url(#logo-grad)" stroke-width="1.5"/>
-              <path d="M8 10h8c3.3 0 6 2.7 6 6s-2.7 6-6 6H8V10z" stroke="url(#logo-grad)" stroke-width="1.5" fill="none"/>
-              <path d="M16 22l6 6" stroke="url(#logo-grad)" stroke-width="1.5" stroke-linecap="round"/>
-              <rect x="20" y="13" width="8" height="10" rx="1" stroke="url(#logo-grad)" stroke-width="1.5" fill="none"/>
+          <a href="#" class="logo" aria-label="RX2600 Home">
+            <svg width="30" height="30" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <rect x="1" y="1" width="34" height="34" rx="4" stroke="url(#lg)" stroke-width="1.5"/>
+              <path d="M8 10h8c3.3 0 6 2.7 6 6s-2.7 6-6 6H8V10z" stroke="url(#lg)" stroke-width="1.5" fill="none"/>
+              <path d="M16 22l6 6" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round"/>
+              <rect x="20" y="13" width="8" height="10" rx="1" stroke="url(#lg)" stroke-width="1.5" fill="none"/>
               <defs>
-                <linearGradient id="logo-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                <linearGradient id="lg" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
                   <stop offset="0%" stop-color="#7c3aed"/>
                   <stop offset="100%" stop-color="#4c1d95"/>
                 </linearGradient>
@@ -58,445 +52,466 @@ const {
             <span>RX2600</span>
           </a>
           <ul class="nav-links" role="list">
-            <li><a href="#product" class="nav-link">System</a></li>
-            <li><a href="#technology" class="nav-link">Technology</a></li>
-            <li><a href="#clinical" class="nav-link">Clinical</a></li>
-            <li><a href="#contact" class="nav-cta">Request Demo</a></li>
+            <li><a href="#" data-go="1" class="nav-link">System</a></li>
+            <li><a href="#" data-go="2" class="nav-link">Technology</a></li>
+            <li><a href="#" data-go="3" class="nav-link">Clinical</a></li>
+            <li><a href="#" data-go="5" class="nav-cta">Request Demo</a></li>
           </ul>
           <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
-            <span></span>
-            <span></span>
+            <span></span><span></span>
           </button>
         </div>
       </nav>
     </header>
-    <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <ul role="list">
-        <li><a href="#product" class="mobile-link">System</a></li>
-        <li><a href="#technology" class="mobile-link">Technology</a></li>
-        <li><a href="#clinical" class="mobile-link">Clinical</a></li>
-        <li><a href="#contact" class="mobile-link">Request Demo</a></li>
+        <li><a href="#" data-go="1" class="mobile-link">System</a></li>
+        <li><a href="#" data-go="2" class="mobile-link">Technology</a></li>
+        <li><a href="#" data-go="3" class="mobile-link">Clinical</a></li>
+        <li><a href="#" data-go="5" class="mobile-link">Request Demo</a></li>
       </ul>
     </div>
   </div>
+
+  <!-- Section progress dots -->
+  <nav class="section-dots" id="section-dots" aria-label="Section navigation">
+  </nav>
 
   <main id="main-content">
     <slot />
   </main>
 
   <script is:inline>
-    // ─── CUSTOM CURSOR ───
-    (function() {
-      const dot = document.getElementById('cursor-dot');
-      const ring = document.getElementById('cursor-ring');
-      if (!dot || !ring) return;
-      let mx = -100, my = -100, rx = -100, ry = -100;
+  (function() {
+    /* ─── CURSOR ─── */
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    if (dot && ring) {
+      let mx=-100,my=-100,rx=-100,ry=-100;
       document.addEventListener('mousemove', e => {
-        mx = e.clientX; my = e.clientY;
-        dot.style.transform = `translate(${mx}px, ${my}px)`;
+        mx=e.clientX; my=e.clientY;
+        dot.style.transform=`translate(${mx}px,${my}px)`;
       });
-      function animateRing() {
-        rx += (mx - rx) * 0.12;
-        ry += (my - ry) * 0.12;
-        ring.style.transform = `translate(${rx}px, ${ry}px)`;
-        requestAnimationFrame(animateRing);
-      }
-      animateRing();
-      document.querySelectorAll('a, button, [data-cursor-hover]').forEach(el => {
-        el.addEventListener('mouseenter', () => { ring.classList.add('ring-hover'); dot.classList.add('dot-hover'); });
-        el.addEventListener('mouseleave', () => { ring.classList.remove('ring-hover'); dot.classList.remove('dot-hover'); });
+      (function loop(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.transform=`translate(${rx}px,${ry}px)`; requestAnimationFrame(loop); })();
+      document.querySelectorAll('a,button,[data-cursor-hover]').forEach(el=>{
+        el.addEventListener('mouseenter',()=>{ring.classList.add('ring-hover');dot.classList.add('dot-hover');});
+        el.addEventListener('mouseleave',()=>{ring.classList.remove('ring-hover');dot.classList.remove('dot-hover');});
       });
-      document.addEventListener('mouseleave', () => { dot.style.opacity='0'; ring.style.opacity='0'; });
-      document.addEventListener('mouseenter', () => { dot.style.opacity='1'; ring.style.opacity='1'; });
-    })();
+      document.addEventListener('mouseleave',()=>{dot.style.opacity='0';ring.style.opacity='0';});
+      document.addEventListener('mouseenter',()=>{dot.style.opacity='1';ring.style.opacity='1';});
+    }
 
-    // ─── NAV COLLAPSE: full-width → pill on scroll ───
-    (function() {
-      const outer = document.getElementById('nav-outer');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) outer.classList.add('nav-collapsed');
-        else outer.classList.remove('nav-collapsed');
-      }, { passive: true });
-    })();
-
-    // ─── HAMBURGER ───
-    (function() {
-      const btn = document.getElementById('hamburger');
-      const menu = document.getElementById('mobile-menu');
-      if (!btn || !menu) return;
-      btn.addEventListener('click', () => {
-        const open = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!open));
-        menu.setAttribute('aria-hidden', String(open));
-        btn.classList.toggle('open', !open);
-        menu.classList.toggle('open', !open);
+    /* ─── HAMBURGER ─── */
+    const btn=document.getElementById('hamburger');
+    const mnu=document.getElementById('mobile-menu');
+    if(btn&&mnu){
+      btn.addEventListener('click',()=>{
+        const o=btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded',String(!o));
+        mnu.setAttribute('aria-hidden',String(o));
+        btn.classList.toggle('open',!o);
+        mnu.classList.toggle('open',!o);
       });
-      menu.querySelectorAll('.mobile-link').forEach(link => {
-        link.addEventListener('click', () => {
-          btn.setAttribute('aria-expanded', 'false');
-          menu.setAttribute('aria-hidden', 'true');
-          btn.classList.remove('open');
-          menu.classList.remove('open');
-        });
-      });
-    })();
+    }
 
-    // ─── SCROLL REVEAL ───
-    (function() {
-      const reveals = document.querySelectorAll('[data-reveal]');
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('revealed');
-            io.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-      reveals.forEach(el => io.observe(el));
-    })();
-
-    // ─── PARALLAX ───
-    (function() {
-      const layers = document.querySelectorAll('[data-parallax]');
-      function onScroll() {
-        const sy = window.scrollY;
-        layers.forEach(el => {
-          const speed = parseFloat(el.dataset.parallax) || 0.3;
-          el.style.transform = `translateY(${sy * speed * 0.4}px) scale(1.08)`;
-        });
-      }
-      window.addEventListener('scroll', onScroll, { passive: true });
-    })();
-
-    // ─── HEADLINE SCROLL-CLIP ───
-    (function() {
-      const headlines = document.querySelectorAll('.scroll-headline');
-      function update() {
-        headlines.forEach(el => {
-          const section = el.closest('section, .split-section');
-          if (!section) return;
-          const rect = section.getBoundingClientRect();
-          const progress = Math.max(0, Math.min(1, -rect.top / (section.offsetHeight * 0.5)));
-          const translateY = progress * -60;
-          const opacity = 1 - progress * 1.4;
-          el.style.transform = `translateY(${translateY}px)`;
-          el.style.opacity = Math.max(0, opacity);
-        });
-      }
-      window.addEventListener('scroll', update, { passive: true });
-      update();
-    })();
-
-    // ─── COUNTER ANIMATION ───
-    (function() {
-      const counters = document.querySelectorAll('[data-count]');
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (!e.isIntersecting) return;
-          const el = e.target;
-          const target = parseInt(el.dataset.count);
-          const suffix = el.dataset.suffix || '';
-          const duration = 1800;
-          const start = performance.now();
-          function frame(now) {
-            const progress = Math.min((now - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            el.textContent = Math.floor(eased * target) + suffix;
-            if (progress < 1) requestAnimationFrame(frame);
+    /* ─── COUNTER ANIMATION ─── */
+    const counters=document.querySelectorAll('[data-count]');
+    if(counters.length){
+      const cio=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          if(!e.isIntersecting)return;
+          const el=e.target,target=parseInt(el.dataset.count),suffix=el.dataset.suffix||'';
+          const dur=1800,start=performance.now();
+          function frame(now){
+            const p=Math.min((now-start)/dur,1),eased=1-Math.pow(1-p,3);
+            el.textContent=Math.floor(eased*target)+suffix;
+            if(p<1)requestAnimationFrame(frame);
           }
           requestAnimationFrame(frame);
-          io.unobserve(el);
+          cio.unobserve(el);
         });
-      }, { threshold: 0.5 });
-      counters.forEach(el => io.observe(el));
-    })();
+      },{threshold:0.5});
+      counters.forEach(el=>cio.observe(el));
+    }
 
-    // ─── SCANLINE GLITCH ───
-    (function() {
-      const title = document.querySelector('.hero-title');
-      if (!title) return;
-      setInterval(() => {
-        title.classList.add('glitch');
-        setTimeout(() => title.classList.remove('glitch'), 200);
-      }, 4500);
-    })();
+    /* ─── SCANLINE GLITCH ─── */
+    const htitle=document.querySelector('.hero-title');
+    if(htitle){
+      setInterval(()=>{
+        htitle.classList.add('glitch');
+        setTimeout(()=>htitle.classList.remove('glitch'),200);
+      },4500);
+    }
+
+    /* ═══════════════════════════════════════════════════
+       FULLSCREEN SCROLL ENGINE
+       - Each [data-panel] = 100vh, stacked absolutely
+       - Mouse wheel / touch drives a custom scroll value
+       - rAF lerps toward target, updates transforms
+       - Exit: darkens + slides left or right
+       - Enter: rises from slight translateY below
+    ═══════════════════════════════════════════════════ */
+    const panels = Array.from(document.querySelectorAll('[data-panel]'));
+    if (!panels.length) return;
+
+    const LERP = 0.072;          // smoothing factor (lower = silkier)
+    const SLIDE_PX = 120;        // how far panels slide on exit (px)
+    let current = 0;
+    let target = 0;
+    let scrollY = 0;
+    let rafId = null;
+    let isAnimating = false;
+    let lastWheelTime = 0;
+    const VH = window.innerHeight;
+    const total = panels.length;
+
+    // Make main a scroll container (height = panels * vh)
+    const main = document.getElementById('main-content');
+    if (main) main.style.height = (total * 100) + 'vh';
+
+    // Position panels
+    panels.forEach((p, i) => {
+      p.style.cssText = `
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100vh;
+        will-change: transform, opacity;
+        z-index: ${10 + (total - i)};
+        overflow: hidden;
+      `;
+    });
+
+    // Build progress dots
+    const dotsNav = document.getElementById('section-dots');
+    if (dotsNav) {
+      panels.forEach((p, i) => {
+        const d = document.createElement('button');
+        d.className = 'sdot' + (i === 0 ? ' sdot-active' : '');
+        d.setAttribute('aria-label', 'Go to section ' + (i + 1));
+        d.dataset.goto = i;
+        d.addEventListener('click', () => goTo(i));
+        dotsNav.appendChild(d);
+      });
+    }
+
+    function setDots(idx) {
+      if (!dotsNav) return;
+      dotsNav.querySelectorAll('.sdot').forEach((d, i) => {
+        d.classList.toggle('sdot-active', i === idx);
+      });
+    }
+
+    // NAV collapse on non-zero panel
+    const navOuter = document.getElementById('nav-outer');
+    function updateNav(idx) {
+      if (!navOuter) return;
+      if (idx > 0) navOuter.classList.add('nav-collapsed');
+      else navOuter.classList.remove('nav-collapsed');
+    }
+
+    // Nav data-go links
+    document.querySelectorAll('[data-go]').forEach(el => {
+      el.addEventListener('click', e => {
+        e.preventDefault();
+        goTo(parseInt(el.dataset.go));
+        if (mnu) { mnu.classList.remove('open'); mnu.setAttribute('aria-hidden','true'); }
+        if (btn) { btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+      });
+    });
+
+    function goTo(idx) {
+      idx = Math.max(0, Math.min(total - 1, idx));
+      current = idx;
+      target = idx;
+      scrollY = idx;
+      applyPanels(idx);
+      setDots(idx);
+      updateNav(idx);
+      // re-trigger reveals on target panel
+      triggerReveals(panels[idx]);
+    }
+
+    function applyPanels(progress) {
+      // progress is float: e.g. 1.4 means 40% through transition from 1→2
+      panels.forEach((p, i) => {
+        const diff = progress - i;
+        let tx = 0, ty = 0, opacity = 1, scale = 1;
+
+        if (diff < -0.001) {
+          // Panel is BELOW current (upcoming): rise from below slightly
+          ty = Math.min(60, -diff * 60);
+          opacity = Math.max(0, 1 + diff * 2);
+          if (diff < -0.5) { opacity = 0; ty = 60; }
+        } else if (diff > 0.001) {
+          // Panel is ABOVE current (exiting): slide left + darken
+          const exit = Math.min(1, diff);
+          // Alternate: odd panels slide left, even panels slide right
+          const dir = i % 2 === 0 ? -1 : 1;
+          tx = exit * SLIDE_PX * dir;
+          opacity = Math.max(0, 1 - exit * 1.8);
+          scale = 1 - exit * 0.04;
+          if (exit >= 1) { opacity = 0; }
+        }
+
+        p.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${scale})`;
+        p.style.opacity = opacity;
+        // Only the current+adjacent panels need to be visible in z-stack
+        p.style.pointerEvents = (Math.abs(diff) < 0.5) ? 'auto' : 'none';
+      });
+    }
+
+    // Smooth scroll value
+    let smoothScroll = 0;
+
+    function tick() {
+      smoothScroll += (target - smoothScroll) * LERP;
+      // Snap when close enough
+      if (Math.abs(smoothScroll - target) < 0.001) smoothScroll = target;
+      applyPanels(smoothScroll);
+      rafId = requestAnimationFrame(tick);
+    }
+    rafId = requestAnimationFrame(tick);
+
+    // Wheel handler
+    function onWheel(e) {
+      e.preventDefault();
+      const now = Date.now();
+      if (now - lastWheelTime < 80) return; // throttle
+      lastWheelTime = now;
+      const dir = e.deltaY > 0 ? 1 : -1;
+      const next = Math.max(0, Math.min(total - 1, target + dir));
+      if (next !== target) {
+        target = next;
+        current = next;
+        setDots(next);
+        updateNav(next);
+        triggerReveals(panels[next]);
+      }
+    }
+    window.addEventListener('wheel', onWheel, { passive: false });
+
+    // Touch handler
+    let touchStartY = 0;
+    window.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+    window.addEventListener('touchend', e => {
+      const dy = touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(dy) < 40) return;
+      const dir = dy > 0 ? 1 : -1;
+      const next = Math.max(0, Math.min(total - 1, target + dir));
+      if (next !== target) {
+        target = next;
+        current = next;
+        setDots(next);
+        updateNav(next);
+        triggerReveals(panels[next]);
+      }
+    }, { passive: true });
+
+    // Keyboard arrows
+    window.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        e.preventDefault();
+        const next = Math.min(total - 1, target + 1);
+        if (next !== target) { target = next; current = next; setDots(next); updateNav(next); triggerReveals(panels[next]); }
+      }
+      if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault();
+        const next = Math.max(0, target - 1);
+        if (next !== target) { target = next; current = next; setDots(next); updateNav(next); triggerReveals(panels[next]); }
+      }
+    });
+
+    // Scroll reveal — trigger per panel when it becomes active
+    function triggerReveals(panel) {
+      if (!panel) return;
+      panel.querySelectorAll('[data-reveal]').forEach(el => {
+        el.classList.remove('revealed');
+        // Small stagger so they fire in sequence
+        const delay = parseInt(el.dataset.delay || 0);
+        setTimeout(() => el.classList.add('revealed'), delay + 80);
+      });
+    }
+    // Trigger first panel on load
+    setTimeout(() => triggerReveals(panels[0]), 200);
+
+    // Initial paint
+    applyPanels(0);
+    setDots(0);
+    updateNav(0);
+
+  })();
   </script>
 </body>
 </html>
 
 <style is:global>
-  /* ─── BASE RESET ─── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 80px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow: hidden; /* the engine controls scrolling */
   }
   body {
-    background: #000000;
+    background: #000;
     color: #e8e8f0;
     font-family: 'Space Grotesk', system-ui, sans-serif;
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow: hidden;
     cursor: none;
+    height: 100vh;
   }
   @media (hover: none) { body { cursor: auto; } #cursor { display: none; } }
   img, video { display: block; max-width: 100%; height: auto; }
   ul[role="list"] { list-style: none; }
   a { text-decoration: none; color: inherit; }
-  button { cursor: none; background: none; border: none; }
+  button { background: none; border: none; cursor: none; }
   ::selection { background: rgba(124,58,237,0.2); color: #fff; }
 
-  /* ─── NOISE OVERLAY ─── */
   #noise {
     position: fixed; inset: 0; z-index: 9999; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
     opacity: 0.025;
   }
 
-  /* ─── CUSTOM CURSOR ─── */
-  #cursor { position: fixed; top: 0; left: 0; z-index: 10000; pointer-events: none; }
+  #cursor { position: fixed; top:0; left:0; z-index:10000; pointer-events:none; }
   #cursor-dot {
-    position: fixed; top: -4px; left: -4px;
-    width: 8px; height: 8px;
-    background: rgba(232,232,240,0.9);
-    border-radius: 50%;
-    transition: opacity 0.3s;
-    will-change: transform;
+    position: fixed; top:-4px; left:-4px; width:8px; height:8px;
+    background: rgba(232,232,240,0.9); border-radius:50%;
+    transition: opacity 0.3s; will-change: transform;
   }
   #cursor-ring {
-    position: fixed; top: -20px; left: -20px;
-    width: 40px; height: 40px;
-    border: 1px solid rgba(232,232,240,0.2);
-    border-radius: 50%;
+    position: fixed; top:-20px; left:-20px; width:40px; height:40px;
+    border: 1px solid rgba(232,232,240,0.2); border-radius:50%;
     transition: opacity 0.3s, width 0.3s, height 0.3s, top 0.3s, left 0.3s, border-color 0.3s;
     will-change: transform;
   }
-  #cursor-ring.ring-hover {
-    width: 60px; height: 60px;
-    top: -30px; left: -30px;
-    border-color: rgba(124,58,237,0.5);
-    background: rgba(124,58,237,0.04);
-  }
-  #cursor-dot.dot-hover { background: #fff; }
+  #cursor-ring.ring-hover { width:60px; height:60px; top:-30px; left:-30px; border-color:rgba(124,58,237,0.5); background:rgba(124,58,237,0.04); }
+  #cursor-dot.dot-hover { background:#fff; }
 
-  /* ═══════════════════════════════════════════
-     NAV — EXPANDED → PILL COLLAPSE
-     On page load: nav-outer is position:fixed, full viewport width.
-     The header has NO background — items float over the page.
-     Logo is at the far left, links at the far right, side padding = 2rem.
-     On scroll: nav-outer gets .nav-collapsed.
-       - Width shrinks to a centered pill via left/right/transform
-       - header gets the frosted pill background + border-radius
-  ═══════════════════════════════════════════ */
-
-  /* EXPANDED STATE — items float edge to edge, no container bg */
+  /* ── NAV ── */
   .nav-outer {
-    position: fixed;
-    top: 16px;
-    left: 0;
-    right: 0;
-    z-index: 900;
-    padding: 0 2rem;
-    /* Smooth morph into pill */
-    transition:
-      left   0.6s cubic-bezier(0.16,1,0.3,1),
-      right  0.6s cubic-bezier(0.16,1,0.3,1),
-      top    0.5s cubic-bezier(0.16,1,0.3,1),
-      padding 0.6s cubic-bezier(0.16,1,0.3,1);
+    position: fixed; top:16px; left:0; right:0; z-index:900; padding:0 2rem;
+    transition: left .6s cubic-bezier(.16,1,.3,1), right .6s cubic-bezier(.16,1,.3,1), top .5s cubic-bezier(.16,1,.3,1), padding .6s cubic-bezier(.16,1,.3,1);
   }
-
-  /* Header: transparent in expanded, gets glass in collapsed */
   .header {
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: 50px;
-    overflow: hidden;
-    box-shadow: none;
-    transition:
-      background 0.5s cubic-bezier(0.16,1,0.3,1),
-      border-color 0.5s cubic-bezier(0.16,1,0.3,1),
-      box-shadow 0.5s cubic-bezier(0.16,1,0.3,1),
-      border-radius 0.5s cubic-bezier(0.16,1,0.3,1);
+    background: transparent; border:1px solid transparent; border-radius:50px; overflow:hidden; box-shadow:none;
+    transition: background .5s cubic-bezier(.16,1,.3,1), border-color .5s, box-shadow .5s, border-radius .5s;
   }
-
-  /* COLLAPSED STATE — morph into a centered pill */
   .nav-outer.nav-collapsed {
-    left: 50%;
-    right: auto;
-    width: min(780px, 88vw);
-    transform: translateX(-50%);
-    padding: 0;
-    top: 12px;
-    transition:
-      left   0.6s cubic-bezier(0.16,1,0.3,1),
-      right  0.6s cubic-bezier(0.16,1,0.3,1),
-      top    0.5s cubic-bezier(0.16,1,0.3,1),
-      width  0.6s cubic-bezier(0.16,1,0.3,1),
-      padding 0.6s cubic-bezier(0.16,1,0.3,1);
+    left:50%; right:auto; width:min(780px,88vw);
+    transform:translateX(-50%); padding:0; top:12px;
   }
   .nav-outer.nav-collapsed .header {
-    background: rgba(5,5,8,0.88);
+    background: rgba(5,5,8,.9);
     backdrop-filter: blur(28px) saturate(180%);
     -webkit-backdrop-filter: blur(28px) saturate(180%);
-    border-color: rgba(255,255,255,0.07);
-    box-shadow: 0 4px 32px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,.07);
+    box-shadow: 0 4px 32px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  .navbar { padding:0; }
+  .nav-container { max-width:100%; margin:0; padding:.75rem 1.5rem; display:flex; justify-content:space-between; align-items:center; }
+  .nav-outer:not(.nav-collapsed) .nav-container { padding:.75rem .5rem; }
+  .logo { display:flex; align-items:center; gap:.65rem; font-family:'Space Mono',monospace; font-size:.95rem; font-weight:700; letter-spacing:3px; color:#e8e8f0; transition:opacity .2s; }
+  .logo span { color:#e8e8f0; }
+  .logo:hover { opacity:.7; }
+  .nav-links { display:flex; list-style:none; align-items:center; gap:2rem; }
+  .nav-link { font-size:.75rem; letter-spacing:1.5px; text-transform:uppercase; color:rgba(232,232,240,.5); position:relative; padding-bottom:2px; transition:color .25s; }
+  .nav-link::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1px; background:rgba(232,232,240,.4); transition:width .3s; }
+  .nav-link:hover { color:#e8e8f0; }
+  .nav-link:hover::after { width:100%; }
+  .nav-cta { font-size:.7rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:600; padding:.45rem 1.2rem; border:1px solid rgba(124,58,237,.45); color:#e8e8f0; border-radius:50px; transition:background .3s, border-color .3s; }
+  .nav-cta:hover { background:rgba(124,58,237,.15); border-color:#7c3aed; }
+  .hamburger { display:none; flex-direction:column; gap:5px; padding:8px; }
+  .hamburger span { display:block; width:22px; height:1px; background:rgba(232,232,240,.7); transition:transform .3s, opacity .3s; transform-origin:center; }
+  .hamburger.open span:first-child { transform:translateY(6px) rotate(45deg); }
+  .hamburger.open span:last-child { transform:translateY(-6px) rotate(-45deg); }
+  .mobile-menu { display:none; margin-top:8px; background:rgba(0,0,0,.97); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,.06); border-radius:20px; overflow:hidden; padding:.5rem 1.5rem 1.5rem; }
+  .mobile-menu.open { display:block; }
+  .mobile-link { display:block; padding:.85rem 0; font-size:1rem; letter-spacing:2px; text-transform:uppercase; color:rgba(232,232,240,.55); border-bottom:1px solid rgba(255,255,255,.04); transition:color .25s; }
+  .mobile-link:hover { color:#e8e8f0; }
+  @media (max-width:768px) {
+    .nav-links { display:none; }
+    .hamburger { display:flex; }
+    .nav-outer { left:0; right:0; padding:0 1rem; top:10px; }
+    .nav-outer.nav-collapsed { width:94vw; }
   }
 
-  .navbar { padding: 0; }
-  .nav-container {
-    max-width: 100%; margin: 0;
-    padding: 0.75rem 1.5rem;
-    display: flex; justify-content: space-between; align-items: center;
+  /* ── SECTION DOTS ── */
+  .section-dots {
+    position: fixed;
+    right: 1.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 800;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: center;
   }
+  .sdot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    border: none;
+    padding: 0;
+    cursor: none;
+    transition: background 0.3s, transform 0.3s, height 0.3s;
+  }
+  .sdot-active {
+    background: rgba(255,255,255,0.75);
+    height: 20px;
+    border-radius: 3px;
+    transform: scaleX(1);
+  }
+  @media (max-width: 768px) { .section-dots { right: 0.75rem; } }
 
-  /* Expanded: slightly more side padding so logo sits at edge */
-  .nav-outer:not(.nav-collapsed) .nav-container {
-    padding: 0.75rem 0.5rem;
-  }
+  /* ── SCROLL REVEAL ── */
+  [data-reveal] { opacity:0; transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+  [data-reveal="up"] { transform:translateY(40px); }
+  [data-reveal="left"] { transform:translateX(-40px); }
+  [data-reveal="right"] { transform:translateX(40px); }
+  [data-reveal="scale"] { transform:scale(.94); }
+  [data-reveal].revealed { opacity:1; transform:none; }
+  [data-reveal][data-delay="100"] { transition-delay:.1s; }
+  [data-reveal][data-delay="200"] { transition-delay:.2s; }
+  [data-reveal][data-delay="300"] { transition-delay:.3s; }
+  [data-reveal][data-delay="400"] { transition-delay:.4s; }
+  [data-reveal][data-delay="500"] { transition-delay:.5s; }
+  @media (prefers-reduced-motion:reduce) { [data-reveal] { opacity:1; transform:none; transition:none; } }
 
-  .logo {
-    display: flex; align-items: center; gap: 0.65rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.95rem; font-weight: 700; letter-spacing: 3px;
-    color: #e8e8f0;
-    transition: opacity 0.2s;
-  }
-  .logo span { color: #e8e8f0; }
-  .logo:hover { opacity: 0.7; }
-
-  .nav-links { display: flex; list-style: none; align-items: center; gap: 2rem; }
-  .nav-link {
-    font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase;
-    color: rgba(232,232,240,0.5);
-    position: relative; padding-bottom: 2px;
-    transition: color 0.25s;
-  }
-  .nav-link::after {
-    content: ''; position: absolute; bottom: 0; left: 0;
-    width: 0; height: 1px;
-    background: rgba(232,232,240,0.4);
-    transition: width 0.3s;
-  }
-  .nav-link:hover { color: #e8e8f0; }
-  .nav-link:hover::after { width: 100%; }
-
-  .nav-cta {
-    font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
-    padding: 0.45rem 1.2rem;
-    border: 1px solid rgba(124,58,237,0.45);
-    color: #e8e8f0;
-    border-radius: 50px;
-    transition: background 0.3s, border-color 0.3s;
-  }
-  .nav-cta:hover {
-    background: rgba(124,58,237,0.15);
-    border-color: #7c3aed;
-  }
-
-  .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: none; }
-  .hamburger span {
-    display: block; width: 22px; height: 1px; background: rgba(232,232,240,0.7);
-    transition: transform 0.3s, opacity 0.3s;
-    transform-origin: center;
-  }
-  .hamburger.open span:first-child { transform: translateY(6px) rotate(45deg); }
-  .hamburger.open span:last-child { transform: translateY(-6px) rotate(-45deg); }
-
-  .mobile-menu {
-    display: none; margin-top: 8px;
-    background: rgba(0,0,0,0.97);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 20px;
-    overflow: hidden;
-    padding: 0.5rem 1.5rem 1.5rem;
-  }
-  .mobile-menu.open { display: block; }
-  .mobile-link {
-    display: block; padding: 0.85rem 0;
-    font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;
-    color: rgba(232,232,240,0.55);
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    transition: color 0.25s;
-  }
-  .mobile-link:hover { color: #e8e8f0; }
-
-  @media (max-width: 768px) {
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-    .nav-outer { left: 0; right: 0; padding: 0 1rem; top: 10px; }
-    .nav-outer.nav-collapsed { width: 94vw; }
-  }
-
-  /* ─── SCROLL REVEAL ─── */
-  [data-reveal] {
-    opacity: 0;
-    transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
-  }
-  [data-reveal="up"] { transform: translateY(40px); }
-  [data-reveal="left"] { transform: translateX(-40px); }
-  [data-reveal="right"] { transform: translateX(40px); }
-  [data-reveal="scale"] { transform: scale(0.94); }
-  [data-reveal].revealed { opacity: 1; transform: none; }
-  [data-reveal][data-delay="100"] { transition-delay: 0.1s; }
-  [data-reveal][data-delay="200"] { transition-delay: 0.2s; }
-  [data-reveal][data-delay="300"] { transition-delay: 0.3s; }
-  [data-reveal][data-delay="400"] { transition-delay: 0.4s; }
-  [data-reveal][data-delay="500"] { transition-delay: 0.5s; }
-  @media (prefers-reduced-motion: reduce) {
-    [data-reveal] { opacity: 1; transform: none; transition: none; }
-  }
-
-  /* ─── SCROLL HEADLINE ─── */
-  .scroll-headline { will-change: transform, opacity; transition: none; }
-
-  /* ─── BUTTONS ─── */
+  /* ── BUTTONS ── */
   .btn-primary {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.85rem 1.8rem;
-    background: #6b21e8;
-    color: #fff;
-    font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    border: 1px solid transparent; border-radius: 2px;
-    transition: box-shadow 0.3s, transform 0.2s, background 0.3s;
-    position: relative;
+    display:inline-flex; align-items:center; gap:.5rem;
+    padding:.85rem 1.8rem;
+    background:#6b21e8; color:#fff;
+    font-size:.72rem; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+    border:1px solid transparent; border-radius:2px;
+    transition:box-shadow .3s, transform .2s, background .3s;
+    position:relative;
   }
-  .btn-primary:hover {
-    background: #5b17cc;
-    box-shadow: 0 4px 24px rgba(107,33,232,0.35);
-    transform: translateY(-1px);
-  }
-  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:hover { background:#5b17cc; box-shadow:0 4px 24px rgba(107,33,232,.35); transform:translateY(-1px); }
+  .btn-primary:active { transform:translateY(0); }
   .btn-ghost {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.85rem 1.8rem;
-    background: transparent; color: rgba(232,232,240,0.8);
-    font-size: 0.72rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-    border: 1px solid rgba(232,232,240,0.15); border-radius: 2px;
-    transition: border-color 0.3s, color 0.3s;
+    display:inline-flex; align-items:center; gap:.5rem;
+    padding:.85rem 1.8rem;
+    background:transparent; color:rgba(232,232,240,.8);
+    font-size:.72rem; font-weight:600; letter-spacing:2px; text-transform:uppercase;
+    border:1px solid rgba(232,232,240,.15); border-radius:2px;
+    transition:border-color .3s, color .3s;
   }
-  .btn-ghost:hover { border-color: rgba(232,232,240,0.45); color: #fff; }
+  .btn-ghost:hover { border-color:rgba(232,232,240,.45); color:#fff; }
 
-  /* ─── SCANLINE GLITCH ─── */
+  /* ── GLITCH ── */
   @keyframes glitch-clip1 {
-    0%   { clip-path: inset(40% 0 50% 0); transform: translate(-4px, 0); }
-    20%  { clip-path: inset(70% 0 10% 0); transform: translate(4px, 0); }
-    100% { clip-path: inset(40% 0 50% 0); transform: translate(0, 0); }
+    0%   { clip-path:inset(40% 0 50% 0); transform:translate(-4px,0); }
+    20%  { clip-path:inset(70% 0 10% 0); transform:translate(4px,0); }
+    100% { clip-path:inset(40% 0 50% 0); transform:translate(0,0); }
   }
   @keyframes glitch-clip2 {
-    0%   { clip-path: inset(10% 0 80% 0); transform: translate(4px, 0); }
-    20%  { clip-path: inset(60% 0 20% 0); transform: translate(-4px, 0); }
-    100% { clip-path: inset(10% 0 80% 0); transform: translate(0, 0); }
+    0%   { clip-path:inset(10% 0 80% 0); transform:translate(4px,0); }
+    20%  { clip-path:inset(60% 0 20% 0); transform:translate(-4px,0); }
+    100% { clip-path:inset(10% 0 80% 0); transform:translate(0,0); }
   }
-  .hero-title.glitch::before {
-    content: attr(data-text); position: absolute; inset: 0;
-    color: rgba(255,0,60,0.5); animation: glitch-clip1 0.2s steps(2) forwards;
-  }
-  .hero-title.glitch::after {
-    content: attr(data-text); position: absolute; inset: 0;
-    color: rgba(107,33,232,0.5); animation: glitch-clip2 0.2s steps(2) forwards;
-  }
+  .hero-title.glitch::before { content:attr(data-text); position:absolute; inset:0; color:rgba(255,0,60,.5); animation:glitch-clip1 .2s steps(2) forwards; }
+  .hero-title.glitch::after  { content:attr(data-text); position:absolute; inset:0; color:rgba(107,33,232,.5); animation:glitch-clip2 .2s steps(2) forwards; }
 </style>
