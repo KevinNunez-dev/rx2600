@@ -1,267 +1,171 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
+
 <Base>
-
-  <!-- ─── NAV ─── -->
-  <nav class="site-nav" aria-label="Primary navigation">
-    <a href="#home" class="nav-logo" aria-label="RX2600 Home">RX2600</a>
-    <ul class="nav-links" role="list">
-      <li><a href="#product">The System</a></li>
-      <li><a href="#technology">Technology</a></li>
-      <li><a href="#clinical">Clinical</a></li>
-      <li><a href="#clinics">For Clinics</a></li>
-    </ul>
-    <a href="#contact" class="nav-cta">Request Demo</a>
-    <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <!-- ─── HERO ─── -->
-  <section class="hero" id="home" aria-label="Hero">
+  <!-- ─── HERO SECTION ─── -->
+  <section class="hero" id="hero">
     <div class="hero-media">
-      <img
-        src="https://rx2600.com/wp-content/uploads/2025/02/robot-main.png"
-        alt="RX2600 Therapeutic Robot"
-        width="1600" height="900"
-        fetchpriority="high"
-      />
+      <canvas id="3d-viewer"></canvas>
     </div>
     <div class="hero-content">
-      <p class="hero-eyebrow reveal" data-reveal>Powered by RPT</p>
-      <h1 class="hero-title reveal" data-reveal>The Future<br/>of Therapy.</h1>
-      <p class="hero-sub reveal" data-reveal>
-        Non-surgical robotic therapy that lengthens muscle tissue,
-        reduces pain, and restores mobility — session after session.
-      </p>
-      <div class="hero-actions reveal" data-reveal>
-        <a href="#contact" class="btn-primary">Request a Demo</a>
-        <a href="#product" class="btn-ghost">
-          See how it works
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </div>
-    <div class="scroll-cue" aria-hidden="true">Scroll</div>
-  </section>
-
-  <!-- ─── STATS STRIP ─── -->
-  <div class="stats-strip">
-    <dl class="stats-grid">
-      <div class="stat reveal" data-reveal>
-        <dt class="stat-label">Muscle Tissue</dt>
-        <dd class="stat-number">Lengthened</dd>
-      </div>
-      <div class="stat reveal" data-reveal>
-        <dt class="stat-label">Pain Relief</dt>
-        <dd class="stat-number">Proven</dd>
-      </div>
-      <div class="stat reveal" data-reveal>
-        <dt class="stat-label">Mobility Gains</dt>
-        <dd class="stat-number">Measurable</dd>
-      </div>
-      <div class="stat reveal" data-reveal>
-        <dt class="stat-label">Surgical Procedures</dt>
-        <dd class="stat-number">Zero</dd>
-      </div>
-    </dl>
-  </div>
-
-  <!-- ─── PRODUCT SECTION ─── -->
-  <section class="section" id="product">
-    <div class="section-inner">
-      <div class="split">
-        <div class="split-text">
-          <p class="section-label reveal" data-reveal>The System</p>
-          <h2 class="section-title reveal" data-reveal>Built to<br/>Perform.</h2>
-          <p class="section-body reveal" data-reveal>
-            RX2600 delivers consistent, repeatable robotic precision to
-            every treatment. Where manual therapy varies, the RX2600 does not.
-            Engineered for the demands of modern physical therapy clinics.
-          </p>
-          <a href="#contact" class="btn-primary reveal" data-reveal style="display:inline-block; margin-top: 2rem;">
-            Learn More
+      <div class="hero-text">
+        <p class="hero-eyebrow">Powered by RPT</p>
+        <h1 class="hero-title">The Future<br/>of Therapy.</h1>
+        <p class="hero-subtitle">
+          Non-surgical robotic therapy that lengthens muscle tissue,
+          reduces pain, and restores mobility — session after session.
+        </p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn-primary">Request a Demo</a>
+          <a href="#product" class="btn-ghost">
+            See how it works
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
           </a>
         </div>
-        <div class="split-media reveal" data-reveal-clip data-reveal>
-          <img
-            src="https://rx2600.com/wp-content/uploads/2026/06/4.jpeg"
-            alt="RX2600 robotic therapy system in use"
-            width="800" height="600"
-            loading="lazy"
-          />
-          <div class="split-media-overlay"></div>
-        </div>
+      </div>
+      <div class="scroll-indicator">
+        <span>Scroll</span>
       </div>
     </div>
   </section>
 
-  <hr class="section-divider" />
+  <!-- ─── SECTION 01: THE SYSTEM ─── -->
+  <section class="full-section" id="product" data-section="1">
+    <div class="section-media" data-parallax="0.3">
+      <img 
+        src="https://rx2600.com/wp-content/uploads/2026/06/4.jpeg"
+        alt="RX2600 robotic therapy system in use"
+        loading="lazy"
+      />
+    </div>
+    <div class="section-content">
+      <p class="section-label">The System</p>
+      <h2>Built to<br/>Perform.</h2>
+      <p class="section-text">
+        RX2600 delivers consistent, repeatable robotic precision to
+        every treatment. Where manual therapy varies, the RX2600 does not.
+        Engineered for the demands of modern physical therapy clinics.
+      </p>
+      <a href="#technology" class="btn-primary">Learn More</a>
+    </div>
+  </section>
 
   <!-- ─── FULL BLEED IMAGE ─── -->
-  <div class="full-bleed reveal" data-reveal aria-hidden="true">
-    <img
+  <div class="full-bleed-image">
+    <img 
       src="https://rx2600.com/wp-content/uploads/2025/02/Robots-and-2-therapists-scaled.jpg"
       alt="RX2600 robotic therapy with two therapists in a clinic setting"
-      width="1600" height="900"
       loading="lazy"
     />
-    <span class="full-bleed-caption">RX2600 — Active Clinic Environment</span>
   </div>
 
-  <!-- ─── TECHNOLOGY ─── -->
-  <section class="section" id="technology">
-    <div class="section-inner">
-      <p class="section-label reveal" data-reveal>Technology</p>
-      <h2 class="section-title reveal" data-reveal>Precision<br/>by Design.</h2>
-      <p class="section-body reveal" data-reveal>
+  <!-- ─── SECTION 02: TECHNOLOGY ─── -->
+  <section class="full-section" id="technology" data-section="2">
+    <div class="section-media" data-parallax="0.3">
+      <img 
+        src="https://rx2600.com/wp-content/uploads/2024/04/robot-up-close-transparent.png"
+        alt="RX2600 close-up"
+        loading="lazy"
+      />
+    </div>
+    <div class="section-content">
+      <p class="section-label">Technology</p>
+      <h2>Precision<br/>by Design.</h2>
+      <p class="section-text">
         Robotic consistency means every patient receives the same precise
         therapeutic force — calibrated, repeatable, and clinically effective.
       </p>
-
-      <ul class="feature-list" role="list">
-        <li class="feature-item reveal" data-reveal>
+      
+      <ul class="feature-list">
+        <li>
           <p class="feature-number">01</p>
           <p class="feature-name">Robotic Consistency</p>
           <p class="feature-desc">Same precise therapeutic force delivered every session. No variation. No fatigue.</p>
         </li>
-        <li class="feature-item reveal" data-reveal>
+        <li>
           <p class="feature-number">02</p>
           <p class="feature-name">Non-Surgical</p>
           <p class="feature-desc">Lengthens muscle tissue without incision, anesthesia, or recovery downtime.</p>
         </li>
-        <li class="feature-item reveal" data-reveal>
+        <li>
           <p class="feature-number">03</p>
           <p class="feature-name">Pain Relief</p>
           <p class="feature-desc">Designed to reduce patient pain at the source through targeted tissue therapy.</p>
-        </li>
-        <li class="feature-item reveal" data-reveal>
-          <p class="feature-number">04</p>
-          <p class="feature-name">Mobility Restoration</p>
-          <p class="feature-desc">Clinical outcomes that measurably increase range of motion and functional movement.</p>
-        </li>
-        <li class="feature-item reveal" data-reveal>
-          <p class="feature-number">05</p>
-          <p class="feature-name">Clinic-Ready</p>
-          <p class="feature-desc">Built for high-throughput physical therapy environments. Easy integration, immediate ROI.</p>
-        </li>
-        <li class="feature-item reveal" data-reveal>
-          <p class="feature-number">06</p>
-          <p class="feature-name">Scalable System</p>
-          <p class="feature-desc">Deploy in a single clinic or scale across a multi-location network with consistent results.</p>
         </li>
       </ul>
     </div>
   </section>
 
-  <hr class="section-divider" />
-
-  <!-- ─── CLINICAL SECTION ─── -->
-  <section class="section" id="clinical">
-    <div class="section-inner">
-      <div class="split reverse">
-        <div class="split-text">
-          <p class="section-label reveal" data-reveal>Clinical Outcomes</p>
-          <h2 class="section-title reveal" data-reveal>Real Results.<br/>Real Clinics.</h2>
-          <p class="section-body reveal" data-reveal>
-            Physical therapists and clinic operators across the country are
-            using the RX2600 to deliver measurable improvements in patient
-            outcomes — and stronger clinic revenue.
-          </p>
-          <p class="section-body reveal" data-reveal style="margin-top:1rem;">
-            From pain management to mobility recovery, RX2600 becomes the
-            centerpiece of a modern, advanced-care practice.
-          </p>
-          <a href="#contact" class="btn-primary reveal" data-reveal style="display:inline-block; margin-top:2rem;">
-            See Clinic Results
-          </a>
-        </div>
-        <div class="split-media reveal" data-reveal-clip data-reveal>
-          <img
-            src="https://rx2600.com/wp-content/uploads/2026/06/3.jpeg"
-            alt="Therapist operating the RX2600 robot in a clinic"
-            width="800" height="600"
-            loading="lazy"
-          />
-          <div class="split-media-overlay"></div>
-        </div>
-      </div>
+  <!-- ─── SECTION 03: CLINICAL ─── -->
+  <section class="full-section reverse" id="clinical" data-section="3">
+    <div class="section-media" data-parallax="0.3">
+      <img 
+        src="https://rx2600.com/wp-content/uploads/2026/06/3.jpeg"
+        alt="Therapist operating the RX2600 robot in a clinic"
+        loading="lazy"
+      />
+    </div>
+    <div class="section-content">
+      <p class="section-label">Clinical Outcomes</p>
+      <h2>Real Results.<br/>Real Clinics.</h2>
+      <p class="section-text">
+        Physical therapists and clinic operators across the country are
+        using the RX2600 to deliver measurable improvements in patient
+        outcomes — and stronger clinic revenue.
+      </p>
+      <p class="section-text">
+        From pain management to mobility recovery, RX2600 becomes the
+        centerpiece of a modern, advanced-care practice.
+      </p>
+      <a href="#contact" class="btn-primary">See Clinic Results</a>
     </div>
   </section>
 
-  <!-- ─── FOR CLINICS ─── -->
-  <section class="section" id="clinics" style="background: var(--surface); border-top: 1px solid var(--border);">
-    <div class="section-inner">
-      <p class="section-label reveal" data-reveal>For Clinic Owners</p>
-      <h2 class="section-title reveal" data-reveal style="max-width: 10ch;">
-        Grow Your<br/>Practice.
-      </h2>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem;" class="clinics-grid">
-        <div>
-          <p class="section-body reveal" data-reveal>
-            Adding the RX2600 to your clinic is more than upgrading equipment.
-            It is adding a revenue-generating, patient-differentiating treatment
-            that other clinics in your market cannot match.
-          </p>
-          <ul style="margin-top: 2rem; list-style: none; display: flex; flex-direction: column; gap: 1rem;">
-            <li class="reveal" data-reveal style="display: flex; gap: 1rem; align-items: flex-start;">
-              <span style="font-family: var(--font-display); color: var(--text-faint); font-size: 1.2rem; line-height: 1; margin-top: 2px;">→</span>
-              <span style="font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6;">New revenue stream without adding staff headcount</span>
-            </li>
-            <li class="reveal" data-reveal style="display: flex; gap: 1rem; align-items: flex-start;">
-              <span style="font-family: var(--font-display); color: var(--text-faint); font-size: 1.2rem; line-height: 1; margin-top: 2px;">→</span>
-              <span style="font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6;">Advanced treatment that differentiates your practice</span>
-            </li>
-            <li class="reveal" data-reveal style="display: flex; gap: 1rem; align-items: flex-start;">
-              <span style="font-family: var(--font-display); color: var(--text-faint); font-size: 1.2rem; line-height: 1; margin-top: 2px;">→</span>
-              <span style="font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6;">Dedicated onboarding, training, and ongoing support</span>
-            </li>
-            <li class="reveal" data-reveal style="display: flex; gap: 1rem; align-items: flex-start;">
-              <span style="font-family: var(--font-display); color: var(--text-faint); font-size: 1.2rem; line-height: 1; margin-top: 2px;">→</span>
-              <span style="font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6;">Proven revenue results across existing clinic partners</span>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <p class="section-body reveal" data-reveal>
-            Whether you are opening a new clinic or expanding an existing
-            practice, the RX2600 team supports you through every step — from
-            site planning and installation to patient marketing and growth.
-          </p>
-          <div style="display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
-            <a href="#contact" class="btn-primary reveal" data-reveal>New Clinic Inquiry</a>
-            <a href="https://rx2600.com/existing-clinic/" target="_blank" rel="noopener noreferrer" class="btn-ghost reveal" data-reveal>
-              Existing Clinic
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
+  <!-- ─── SECTION 04: FOR CLINICS ─── -->
+  <section class="full-section" id="clinics" data-section="4">
+    <div class="section-media" data-parallax="0.3">
+      <img 
+        src="https://rx2600.com/wp-content/uploads/2024/04/RPT-OfficePortraits-2-scaled.jpg"
+        alt="RX2600 team"
+        loading="lazy"
+      />
+    </div>
+    <div class="section-content">
+      <p class="section-label">For Clinic Owners</p>
+      <h2>Grow Your<br/>Practice.</h2>
+      <p class="section-text">
+        Adding the RX2600 to your clinic is more than upgrading equipment.
+        It is adding a revenue-generating, patient-differentiating treatment
+        that other clinics in your market cannot match.
+      </p>
+      
+      <ul class="benefit-list">
+        <li>New revenue stream without adding staff headcount</li>
+        <li>Advanced treatment that differentiates your practice</li>
+        <li>Dedicated onboarding, training, and ongoing support</li>
+        <li>Proven revenue results across existing clinic partners</li>
+      </ul>
+      
+      <a href="#contact" class="btn-primary">New Clinic Inquiry</a>
     </div>
   </section>
 
-  <!-- ─── CTA ─── -->
+  <!-- ─── CTA SECTION ─── -->
   <section class="cta-section" id="contact">
-    <h2 class="cta-title reveal" data-reveal>Ready to Transform<br/>Your Clinic?</h2>
-    <p class="cta-sub reveal" data-reveal>
+    <h2>Ready to Transform<br/>Your Clinic?</h2>
+    <p>
       Join clinics already using RX2600 to deliver better outcomes and
       stronger patient satisfaction.
     </p>
-    <div class="cta-actions">
-      <a
-        href="https://rx2600.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-primary reveal"
-        data-reveal
-      >Request a Demo</a>
-      <a
-        href="tel:8556292805"
-        class="btn-ghost reveal"
-        data-reveal
-      >
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.6 19a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 3.1 4.2 2 2 0 0 1 5.08 2h3a2 2 0 0 1 2 1.72c.12.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L9.09 9.91A16 16 0 0 0 15 15.91l1.27-1.27a2 2 0 0 1 2.11-.45c.9.35 1.85.6 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+    <div class="cta-buttons">
+      <a href="https://rx2600.com" target="_blank" rel="noopener noreferrer" class="btn-primary">Request a Demo</a>
+      <a href="tel:8556292805" class="btn-ghost">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.6 19a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 3.1 4.2 2 2 0 0 1 5.08 2h3a2 2 0 0 1 2 1.72c.12.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L9.09 9.91A16 16 0 0 0 15 15.91l1.27-1.27a2 2 0 0 1 2.11-.45c.9.35 1.85.6 2.81.72A2 2 0 0 1 22 16.92z"/>
+        </svg>
         (855) 629-2805
       </a>
     </div>
@@ -271,21 +175,327 @@ import Base from '../layouts/Base.astro';
   <footer class="site-footer">
     <div class="footer-inner">
       <span class="footer-logo">RX2600</span>
-      <nav class="footer-links" aria-label="Footer navigation">
+      <nav class="footer-links">
         <a href="https://rx2600.com" target="_blank" rel="noopener noreferrer">rx2600.com</a>
-        <a href="https://rx2600.com/existing-clinic/" target="_blank" rel="noopener noreferrer">Existing Clinic</a>
-        <a href="https://rx2600.com/customer-service/" target="_blank" rel="noopener noreferrer">Customer Service</a>
         <a href="tel:8556292805">(855) 629-2805</a>
       </nav>
       <p class="footer-copy">© 2026 RX2600. Powered by RPT.</p>
     </div>
   </footer>
-
 </Base>
 
 <style>
-/* Mobile clinics grid */
-@media (max-width: 900px) {
-  .clinics-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
-}
+  /* ─── HERO SECTION ─── */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    margin-top: 80px;
+  }
+
+  .hero-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-graphic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    padding: 4rem 2rem 6rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .hero-text {
+    flex: 1;
+  }
+
+  .hero-label {
+    font-size: 0.875rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 8vw, 5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-indicator span {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(12px); }
+  }
+
+  /* ─── CONTENT SECTIONS ─── */
+  .content-section {
+    background: #0a0a0a;
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 100;
+  }
+
+  .section-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .section-image-top {
+    width: 100%;
+    height: 400px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  }
+
+  .placeholder-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .section-code {
+    font-size: 0.875rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ff6b5b;
+    margin-bottom: 1rem;
+  }
+
+  .section-heading {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+  }
+
+  .section-description {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #cccccc;
+    margin-bottom: 2rem;
+  }
+
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #ff6b5b;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    transition: gap 0.3s;
+  }
+
+  .cta-link:hover {
+    gap: 1.25rem;
+  }
+
+  .cta-link svg {
+    transition: transform 0.3s;
+  }
+
+  .cta-link:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* ─── STORY SECTION ─── */
+  .story-section {
+    background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+    padding: 8rem 2rem;
+    position: relative;
+    z-index: 101;
+  }
+
+  .story-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .story-decoration {
+    font-size: 3rem;
+    color: #ff6b5b;
+    margin-bottom: 2rem;
+    opacity: 0.6;
+  }
+
+  .story-title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    color: #ffffff;
+  }
+
+  .story-text {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: #bbbbbb;
+    margin-bottom: 2rem;
+    text-align: justify;
+  }
+
+  /* ─── FEATURED SECTION ─── */
+  .featured-section {
+    background: #0a0a0a;
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 102;
+  }
+
+  .featured-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .featured-image {
+    width: 100%;
+    height: 500px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    order: 2;
+  }
+
+  .featured-content {
+    order: 1;
+  }
+
+  .featured-label {
+    font-size: 0.875rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ff6b5b;
+    margin-bottom: 1rem;
+  }
+
+  .featured-title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+  }
+
+  .featured-description {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #cccccc;
+    margin-bottom: 2rem;
+  }
+
+  .featured-cta {
+    margin-top: 2rem;
+  }
+
+  /* ─── FOOTER ─── */
+  .site-footer {
+    background: #000000;
+    padding: 4rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    z-index: 103;
+  }
+
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .footer-content p {
+    font-size: 0.875rem;
+    color: #888888;
+    margin: 0.5rem 0;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .hero-content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2rem;
+    }
+
+    .scroll-indicator {
+      align-self: center;
+      margin-top: 2rem;
+    }
+
+    .section-container,
+    .featured-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .featured-image {
+      order: 1;
+      height: 300px;
+    }
+
+    .featured-content {
+      order: 2;
+    }
+
+    .story-text {
+      text-align: left;
+    }
+
+    .content-section,
+    .story-section,
+    .featured-section {
+      padding: 3rem 1rem;
+    }
+  }
 </style>

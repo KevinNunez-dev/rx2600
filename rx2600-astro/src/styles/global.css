@@ -1,103 +1,170 @@
-/* ─── RX2600 Design System ─── */
-/* Art direction: robotic therapy product → clinical precision meets premium dark
-   Palette: near-black surfaces + bone-white type + zero color accents (assets carry color)
-   Typography: Bebas Neue display + Inter body — industrial weight meets clean legibility
-   Density: spacious, cinematic, image-led */
-
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300..700&display=swap');
+/* ─── Modern Parallax Design System ─── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Surfaces */
-  --bg:            #0a0a0a;
-  --surface:       #111111;
-  --surface-2:     #161616;
-  --surface-offset:#1c1c1c;
-  --border:        rgba(255,255,255,0.08);
-  --divider:       rgba(255,255,255,0.06);
+  /* Colors */
+  --bg-dark: #0a0a0a;
+  --bg-darker: #000000;
+  --text-white: #ffffff;
+  --text-light: #e0e0e0;
+  --text-muted: #999999;
+  --accent: #ff6b5b;
+  --accent-light: #ff8a5b;
 
-  /* Type */
-  --text:          #f0ede8;
-  --text-muted:    #888884;
-  --text-faint:    #444440;
-
-  /* Fonts */
-  --font-display:  'Bebas Neue', 'Arial Narrow', sans-serif;
-  --font-body:     'Inter', 'Helvetica Neue', sans-serif;
-
-  /* Type scale */
-  --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
-  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
-  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
-  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
-  --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
-  --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
-  --text-3xl:  clamp(3rem,     1rem    + 5vw,    6rem);
-  --text-hero: clamp(4rem,     1rem    + 9vw,   10rem);
-
-  /* Spacing */
-  --space-1:  0.25rem; --space-2:  0.5rem;  --space-3:  0.75rem;
-  --space-4:  1rem;    --space-6:  1.5rem;  --space-8:  2rem;
-  --space-10: 2.5rem;  --space-12: 3rem;    --space-16: 4rem;
-  --space-20: 5rem;    --space-24: 6rem;    --space-32: 8rem;
-
-  /* Layout */
-  --content-narrow:  640px;
-  --content-default: 960px;
-  --content-wide:    1200px;
-
-  /* Radius */
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
+  /* Typography */
+  --font-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Inter', sans-serif;
 }
 
 /* ─── Reset ─── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html {
+  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  scroll-behavior: smooth;
-  scroll-padding-top: var(--space-16);
 }
+
 body {
-  min-height: 100dvh;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: var(--text-base);
+  background: var(--bg-dark);
+  color: var(--text-white);
+  font-family: var(--font-base);
+  font-size: 1rem;
   line-height: 1.6;
   overflow-x: hidden;
 }
-img, video { display: block; max-width: 100%; height: auto; }
-ul[role="list"] { list-style: none; }
-input, button, select, textarea { font: inherit; color: inherit; }
-h1,h2,h3,h4 { text-wrap: balance; line-height: 1; }
-p, li { text-wrap: pretty; max-width: 60ch; }
-button { cursor: pointer; background: none; border: none; }
-a { color: inherit; text-decoration: none; }
-::selection { background: rgba(240,237,232,0.15); }
-:focus-visible { outline: 1px solid rgba(255,255,255,0.5); outline-offset: 3px; }
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+
+/* ─── Typography ─── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/* ─── Utilities ─── */
+img, svg, video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ─── Parallax Support ─── */
+[data-parallax] {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+/* ─── Animations ─── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* ─── Scroll Reveals ─── */
-.reveal {
-  opacity: 1;
-}
-@supports (animation-timeline: scroll()) {
-  .reveal {
+@keyframes slideInLeft {
+  from {
     opacity: 0;
-    animation: rx-fade linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 60%;
+    transform: translateX(-50px);
   }
-  .reveal-clip {
-    clip-path: inset(0 0 100% 0);
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.8s ease-out forwards;
+}
+
+/* ─── Scrollbar Styling ─── */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-light);
+}
+
+/* ─── Selection ─── */
+::selection {
+  background: var(--accent);
+  color: var(--bg-dark);
+}
+
+/* ─── Focus States ─── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ─── Responsive Typography ─── */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* ─── Print Styles ─── */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+}
     animation: rx-clip linear both;
     animation-timeline: view();
     animation-range: entry 0% entry 60%;
