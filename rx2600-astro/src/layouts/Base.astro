@@ -39,10 +39,16 @@ const {
       <div class="nav-container">
         <a href="#hero" class="logo" aria-label="RX2600 Home">
           <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-            <rect x="1" y="1" width="34" height="34" rx="4" stroke="#00f5d4" stroke-width="1.5"/>
-            <path d="M8 10h8c3.3 0 6 2.7 6 6s-2.7 6-6 6H8V10z" stroke="#00f5d4" stroke-width="1.5" fill="none"/>
-            <path d="M16 22l6 6" stroke="#00f5d4" stroke-width="1.5" stroke-linecap="round"/>
-            <rect x="20" y="13" width="8" height="10" rx="1" stroke="#00f5d4" stroke-width="1.5" fill="none"/>
+            <rect x="1" y="1" width="34" height="34" rx="4" stroke="url(#logo-grad)" stroke-width="1.5"/>
+            <path d="M8 10h8c3.3 0 6 2.7 6 6s-2.7 6-6 6H8V10z" stroke="url(#logo-grad)" stroke-width="1.5" fill="none"/>
+            <path d="M16 22l6 6" stroke="url(#logo-grad)" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="20" y="13" width="8" height="10" rx="1" stroke="url(#logo-grad)" stroke-width="1.5" fill="none"/>
+            <defs>
+              <linearGradient id="logo-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#c4387f"/>
+                <stop offset="100%" stop-color="#8b22d9"/>
+              </linearGradient>
+            </defs>
           </svg>
           <span>RX2600</span>
         </a>
@@ -80,7 +86,6 @@ const {
       const ring = document.getElementById('cursor-ring');
       if (!dot || !ring) return;
       let mx = -100, my = -100, rx = -100, ry = -100;
-      let isHovering = false;
       document.addEventListener('mousemove', e => {
         mx = e.clientX; my = e.clientY;
         dot.style.transform = `translate(${mx}px, ${my}px)`;
@@ -155,9 +160,6 @@ const {
         const sy = window.scrollY;
         layers.forEach(el => {
           const speed = parseFloat(el.dataset.parallax) || 0.3;
-          const rect = el.closest('section')?.getBoundingClientRect();
-          if (!rect) return;
-          const offset = (rect.top + sy) - sy;
           el.style.transform = `translateY(${sy * speed * 0.4}px) scale(1.08)`;
         });
       }
@@ -223,7 +225,7 @@ const {
   ul[role="list"] { list-style: none; }
   a { text-decoration: none; color: inherit; }
   button { cursor: none; background: none; border: none; }
-  ::selection { background: rgba(0,245,212,0.18); color: #fff; }
+  ::selection { background: rgba(196,56,127,0.2); color: #fff; }
 
   /* ─── NOISE OVERLAY ─── */
   #noise {
@@ -237,7 +239,7 @@ const {
   #cursor-dot {
     position: fixed; top: -4px; left: -4px;
     width: 8px; height: 8px;
-    background: #00f5d4;
+    background: #c4387f;
     border-radius: 50%;
     transition: opacity 0.3s;
     will-change: transform;
@@ -245,7 +247,7 @@ const {
   #cursor-ring {
     position: fixed; top: -20px; left: -20px;
     width: 40px; height: 40px;
-    border: 1.5px solid rgba(0,245,212,0.6);
+    border: 1.5px solid rgba(196,56,127,0.6);
     border-radius: 50%;
     transition: opacity 0.3s, width 0.3s, height 0.3s, top 0.3s, left 0.3s, border-color 0.3s;
     will-change: transform;
@@ -253,10 +255,10 @@ const {
   #cursor-ring.ring-hover {
     width: 60px; height: 60px;
     top: -30px; left: -30px;
-    border-color: #00f5d4;
-    background: rgba(0,245,212,0.06);
+    border-color: #c4387f;
+    background: rgba(196,56,127,0.06);
   }
-  #cursor-dot.dot-hover { background: #fff; transform-origin: center; }
+  #cursor-dot.dot-hover { background: #fff; }
 
   /* ─── HEADER ─── */
   .header {
@@ -269,7 +271,7 @@ const {
     background: rgba(5,5,8,0.88);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom-color: rgba(0,245,212,0.1);
+    border-bottom-color: rgba(196,56,127,0.12);
   }
   .navbar { padding: 1.25rem 0; }
   .nav-container {
@@ -280,7 +282,10 @@ const {
     display: flex; align-items: center; gap: 0.75rem;
     font-family: 'Space Mono', monospace;
     font-size: 1.1rem; font-weight: 700; letter-spacing: 3px;
-    color: #00f5d4;
+    background: linear-gradient(135deg, #c4387f 0%, #8b22d9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     transition: opacity 0.2s;
   }
   .logo:hover { opacity: 0.8; }
@@ -295,7 +300,8 @@ const {
   }
   .nav-link::after {
     content: ''; position: absolute; bottom: 0; left: 0;
-    width: 0; height: 1px; background: #00f5d4;
+    width: 0; height: 1px;
+    background: linear-gradient(90deg, #c4387f, #8b22d9);
     transition: width 0.3s;
   }
   .nav-link:hover { color: #fff; }
@@ -303,10 +309,13 @@ const {
   .nav-cta {
     font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
     padding: 0.6rem 1.4rem;
-    border: 1px solid #00f5d4; color: #00f5d4; border-radius: 2px;
-    transition: background 0.3s, color 0.3s;
+    border: 1px solid #c4387f; color: #c4387f; border-radius: 2px;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
   }
-  .nav-cta:hover { background: #00f5d4; color: #050508; }
+  .nav-cta:hover {
+    background: #c4387f; color: #fff;
+    box-shadow: 0 0 20px rgba(196,56,127,0.3);
+  }
   .hamburger {
     display: none; flex-direction: column; gap: 6px;
     padding: 8px; cursor: none;
@@ -321,7 +330,7 @@ const {
   .mobile-menu {
     display: none; padding: 1rem 2rem 2rem;
     background: rgba(5,5,8,0.97);
-    border-top: 1px solid rgba(0,245,212,0.08);
+    border-top: 1px solid rgba(196,56,127,0.1);
   }
   .mobile-menu.open { display: block; }
   .mobile-link {
@@ -330,7 +339,7 @@ const {
     color: rgba(232,232,240,0.7); border-bottom: 1px solid rgba(255,255,255,0.04);
     transition: color 0.3s;
   }
-  .mobile-link:hover { color: #00f5d4; }
+  .mobile-link:hover { color: #c4387f; }
   @media (max-width: 768px) {
     .nav-links { display: none; }
     .hamburger { display: flex; }
@@ -359,10 +368,11 @@ const {
   .btn-primary {
     display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.9rem 2rem;
-    background: #00f5d4; color: #050508;
+    background: linear-gradient(135deg, #c4387f 0%, #8b22d9 100%);
+    color: #fff;
     font-size: 0.75rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-    border: 1px solid #00f5d4; border-radius: 2px;
-    transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+    border: 1px solid transparent; border-radius: 2px;
+    transition: box-shadow 0.3s, transform 0.2s, opacity 0.2s;
     position: relative; overflow: hidden;
   }
   .btn-primary::before {
@@ -371,7 +381,7 @@ const {
     opacity: 0; transition: opacity 0.3s;
   }
   .btn-primary:hover {
-    box-shadow: 0 0 24px rgba(0,245,212,0.35), 0 0 60px rgba(0,245,212,0.12);
+    box-shadow: 0 0 28px rgba(196,56,127,0.4), 0 0 60px rgba(139,34,217,0.15);
     transform: translateY(-1px);
   }
   .btn-primary:hover::before { opacity: 1; }
@@ -404,7 +414,7 @@ const {
   }
   .hero-title.glitch::after {
     content: attr(data-text); position: absolute; inset: 0;
-    color: #00f5d4; animation: glitch-clip2 0.2s steps(2) forwards;
+    color: #8b22d9; animation: glitch-clip2 0.2s steps(2) forwards;
     opacity: 0.7;
   }
 </style>
