@@ -36,7 +36,7 @@ const {
     <header class="header" id="header">
       <nav class="navbar">
         <div class="nav-container">
-          <a href="#" class="logo" aria-label="RX2600 Home">
+          <a href="/" class="logo" aria-label="RX2600 Home">
             <svg width="30" height="30" viewBox="0 0 36 36" fill="none" aria-hidden="true">
               <rect x="1" y="1" width="34" height="34" rx="4" stroke="url(#lg)" stroke-width="1.5"/>
               <path d="M8 10h8c3.3 0 6 2.7 6 6s-2.7 6-6 6H8V10z" stroke="url(#lg)" stroke-width="1.5" fill="none"/>
@@ -52,10 +52,11 @@ const {
             <span>RX2600</span>
           </a>
           <ul class="nav-links" role="list">
-            <li><a href="#" data-go="1" class="nav-link">System</a></li>
-            <li><a href="#" data-go="2" class="nav-link">Technology</a></li>
-            <li><a href="#" data-go="3" class="nav-link">Clinical</a></li>
-            <li><a href="#" data-go="5" class="nav-cta">Request Demo</a></li>
+            <li><a href="/" data-go="1" class="nav-link">System</a></li>
+            <li><a href="/" data-go="2" class="nav-link">Technology</a></li>
+            <li><a href="/" data-go="3" class="nav-link">Clinical</a></li>
+            <li><a href="/clinics" class="nav-link nav-link--clinics">Find a Clinic</a></li>
+            <li><a href="/" data-go="5" class="nav-cta">Request Demo</a></li>
           </ul>
           <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
             <span></span><span></span>
@@ -65,11 +66,12 @@ const {
     </header>
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <ul role="list">
-        <li><a href="#hero" class="mobile-link">Home</a></li>
-        <li><a href="#product" class="mobile-link">System</a></li>
-        <li><a href="#technology" class="mobile-link">Technology</a></li>
-        <li><a href="#clinical" class="mobile-link">Clinical</a></li>
-        <li><a href="#contact" class="mobile-link">Request Demo</a></li>
+        <li><a href="/" class="mobile-link">Home</a></li>
+        <li><a href="/" class="mobile-link">System</a></li>
+        <li><a href="/" class="mobile-link">Technology</a></li>
+        <li><a href="/" class="mobile-link">Clinical</a></li>
+        <li><a href="/clinics" class="mobile-link">Find a Clinic</a></li>
+        <li><a href="/" class="mobile-link">Request Demo</a></li>
       </ul>
     </div>
   </div>
@@ -154,22 +156,16 @@ const {
        reveals. No fixed panels, no custom engine.
     ═══════════════════════════════════════════════════ */
     if (IS_MOBILE) {
-      // Make html/body scrollable on mobile
       document.documentElement.style.overflow = 'auto';
       document.body.style.overflow = 'auto';
       document.body.style.height = 'auto';
       document.body.style.cursor = 'auto';
 
-      // Hide cursor & dots on mobile
       const cursorEl = document.getElementById('cursor');
       if (cursorEl) cursorEl.style.display = 'none';
       const dotsEl = document.getElementById('section-dots');
       if (dotsEl) dotsEl.style.display = 'none';
 
-      // Nav always visible on mobile
-      const navOuter = document.getElementById('nav-outer');
-
-      // Scroll reveals via IntersectionObserver
       const revealEls = document.querySelectorAll('[data-reveal]');
       if (revealEls.length) {
         const rio = new IntersectionObserver(entries => {
@@ -183,32 +179,26 @@ const {
         }, { threshold: 0.15 });
         revealEls.forEach(el => rio.observe(el));
       }
-      return; // skip desktop engine
+      return;
     }
 
     /* ═══════════════════════════════════════════════════
        DESKTOP: CINEMATIC FULLSCREEN SCROLL ENGINE
-       LERP = 0.022  → very slow, silky glide
-       Exit = soft fade-up only (no lateral slide = no dizziness)
-       COOLDOWN = 1400ms lock between sections
-       Components animate independently via staggered data-delay
     ═══════════════════════════════════════════════════ */
     const panels = Array.from(document.querySelectorAll('[data-panel]'));
     if (!panels.length) return;
 
-    const LERP      = 0.022;   // ← ultra-slow cinematic glide
-    const COOLDOWN  = 1400;    // ← 1.4s lock so you fully experience each panel
+    const LERP      = 0.022;
+    const COOLDOWN  = 1400;
     const total     = panels.length;
 
     let target      = 0;
     let smoothScroll = 0;
     let locked      = false;
 
-    // Make main a tall scroll container so browser scroll bar exists
     const main = document.getElementById('main-content');
     if (main) main.style.height = (total * 100) + 'vh';
 
-    // Fix all panels as fullscreen layers
     panels.forEach((p, i) => {
       p.style.cssText = `
         position: fixed;
@@ -220,7 +210,6 @@ const {
       `;
     });
 
-    // Progress dots
     const dotsNav = document.getElementById('section-dots');
     if (dotsNav) {
       panels.forEach((_, i) => {
@@ -243,7 +232,6 @@ const {
       idx > 0 ? navOuter.classList.add('nav-collapsed') : navOuter.classList.remove('nav-collapsed');
     }
 
-    // Nav data-go links
     document.querySelectorAll('[data-go]').forEach(el => {
       el.addEventListener('click', e => {
         e.preventDefault();
@@ -253,24 +241,21 @@ const {
       });
     });
 
-    /* ─── Panel transform ─── */
     function applyPanels(progress) {
       panels.forEach((p, i) => {
         const diff = progress - i;
         let ty = 0, opacity = 1, scale = 1;
 
         if (diff < -0.001) {
-          // Upcoming panel: slides in gently from below
-          const t = Math.max(-1, diff); // clamp
-          ty = -t * 55;                 // starts 55px below
+          const t = Math.max(-1, diff);
+          ty = -t * 55;
           opacity = Math.max(0, 1 + t * 2.5);
           if (diff < -0.4) { opacity = 0; ty = 55; }
         } else if (diff > 0.001) {
-          // Exiting panel: soft fade up — NO lateral slide, gentle scale-down
           const exit = Math.min(1, diff);
-          ty      = exit * -30;         // floats gently upward (30px max)
+          ty      = exit * -30;
           opacity = Math.max(0, 1 - exit * 2.2);
-          scale   = 1 - exit * 0.025;  // very subtle shrink
+          scale   = 1 - exit * 0.025;
           if (exit >= 0.9) opacity = 0;
         }
 
@@ -280,7 +265,6 @@ const {
       });
     }
 
-    /* ─── Advance section ─── */
     function advance(dir) {
       if (locked) return;
       const next = Math.max(0, Math.min(total - 1, target + dir));
@@ -303,7 +287,6 @@ const {
       triggerReveals(panels[idx]);
     }
 
-    /* ─── rAF loop ─── */
     (function tick() {
       smoothScroll += (target - smoothScroll) * LERP;
       if (Math.abs(smoothScroll - target) < 0.0005) smoothScroll = target;
@@ -311,7 +294,6 @@ const {
       requestAnimationFrame(tick);
     })();
 
-    /* ─── Input handlers ─── */
     window.addEventListener('wheel', e => {
       e.preventDefault();
       advance(e.deltaY > 0 ? 1 : -1);
@@ -330,18 +312,15 @@ const {
       if (e.key === 'ArrowUp'   || e.key === 'PageUp')   { e.preventDefault(); advance(-1); }
     });
 
-    /* ─── Scroll reveal — per component stagger ─── */
     function triggerReveals(panel) {
       if (!panel) return;
       panel.querySelectorAll('[data-reveal]').forEach(el => {
         el.classList.remove('revealed');
-        // Each element's data-delay drives its own independent timing
         const delay = parseInt(el.dataset.delay || 0);
         setTimeout(() => el.classList.add('revealed'), delay + 60);
       });
     }
 
-    // Boot
     setTimeout(() => triggerReveals(panels[0]), 300);
     applyPanels(0);
     setDots(0);
@@ -358,11 +337,9 @@ const {
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Desktop: overflow hidden so engine controls scroll */
     overflow: hidden;
   }
 
-  /* Mobile: restore natural scroll */
   @media (max-width: 768px) {
     html, body {
       overflow: auto !important;
@@ -427,7 +404,7 @@ const {
     transition: background .5s cubic-bezier(.16,1,.3,1), border-color .5s, box-shadow .5s, border-radius .5s;
   }
   .nav-outer.nav-collapsed {
-    left:50%; right:auto; width:min(780px,88vw);
+    left:50%; right:auto; width:min(860px,92vw);
     transform:translateX(-50%); padding:0; top:12px;
   }
   .nav-outer.nav-collapsed .header {
@@ -448,6 +425,9 @@ const {
   .nav-link::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1px; background:rgba(232,232,240,.4); transition:width .3s; }
   .nav-link:hover { color:#e8e8f0; }
   .nav-link:hover::after { width:100%; }
+  .nav-link--clinics { color: rgba(196,24,122,.75); }
+  .nav-link--clinics:hover { color: rgba(196,24,122,1); }
+  .nav-link--clinics::after { background: rgba(196,24,122,.6); }
   .nav-cta { font-size:.7rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:600; padding:.45rem 1.2rem; border:1px solid rgba(196,24,122,.5); color:#e8e8f0; border-radius:50px; transition:background .3s, border-color .3s, box-shadow .3s; }
   .nav-cta:hover { background:rgba(196,24,122,.18); border-color:#c4187a; box-shadow:0 0 16px rgba(196,24,122,.2); }
   .hamburger { display:none; flex-direction:column; gap:5px; padding:8px; }
@@ -463,7 +443,6 @@ const {
     .hamburger { display:flex; cursor:pointer; }
     .nav-outer { left:0; right:0; padding:0 1rem; top:10px; }
     .nav-outer.nav-collapsed { width:94vw; left:3vw; transform:none; }
-    /* On mobile nav is always slightly styled */
     .header { background:rgba(0,0,0,.85); backdrop-filter:blur(16px); border-color:rgba(255,255,255,.05); border-radius:16px; }
   }
 
@@ -527,8 +506,6 @@ const {
   }
 
   /* ── BUTTONS ── */
-
-  /* PRIMARY — gradient fill. Used ONLY on "Request a Demo" CTAs. */
   .btn-primary {
     display: inline-flex; align-items: center; gap: .5rem;
     padding: .85rem 1.8rem;
@@ -542,7 +519,6 @@ const {
   .btn-primary:hover { filter: brightness(1.15); box-shadow: 0 4px 28px rgba(196,24,122,.4); transform: translateY(-1px); }
   .btn-primary:active { transform: translateY(0); }
 
-  /* GHOST — square corners, fuchsia stroke + fuchsia text. All other buttons. */
   .btn-ghost {
     display: inline-flex; align-items: center; gap: .5rem;
     padding: .85rem 1.8rem;
@@ -550,7 +526,7 @@ const {
     color: #e040fb;
     font-size: .72rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
     border: 1px solid #e040fb;
-    border-radius: 2px; /* square — no rounding */
+    border-radius: 2px;
     transition: background .3s, color .3s, box-shadow .3s, border-color .3s;
   }
   .btn-ghost:hover {
